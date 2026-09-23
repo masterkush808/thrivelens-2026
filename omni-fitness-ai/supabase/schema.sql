@@ -1,0 +1,8 @@
+-- The canonical A1 schema is versioned in:
+--   migrations/20260914000000_initial_schema.sql
+--
+-- Apply it with the Supabase CLI:
+--   supabase db push
+--
+-- Do not run an ad-hoc schema from this file. In particular, application
+-- passwords must never be stored in public tables and RLS must remain enabled.

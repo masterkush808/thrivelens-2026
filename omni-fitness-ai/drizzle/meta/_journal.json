@@ -1,0 +1,34 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1789344177599,
+      "tag": "0000_lyrical_clint_barton",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1789345792296,
+      "tag": "0001_melted_lady_vermin",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1789384599343,
+      "tag": "0002_typical_speed",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1789812000000,
+      "tag": "0003_coach_schedules",
+      "breakpoints": true
+    }
+  ]
+}

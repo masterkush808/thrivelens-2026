@@ -1,0 +1,51 @@
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: ["./App.tsx", "./src/**/*.{js,jsx,ts,tsx}"],
+  presets: [require("nativewind/preset")],
+  theme: {
+    extend: {
+      colors: {
+        primary: { DEFAULT: "#E7BE73", dark: "#B88942", light: "#F5DCA7" },
+        accent: { DEFAULT: "#F5DCA7", dark: "#E7BE73" },
+        gold: { DEFAULT: "#E7BE73", light: "#F5DCA7", deep: "#B88942" },
+        success: "#34C759",
+        warning: "#FF9500",
+        error: "#FF3B30",
+        info: "#5AC8FA",
+        background: "#0C0B09",
+        surface: { DEFAULT: "#181611", elevated: "#221F18", highlight: "#2D281E" },
+        text: { primary: "#FAF6EE", secondary: "#C7BFAF", tertiary: "#ABA291", inverse: "#171208" },
+        border: { DEFAULT: "#40382A", light: "#302B22", control: "#80725A" },
+        ai: { glow: "#E7BE73", surface: "rgba(231, 190, 115, 0.10)" },
+      },
+      spacing: {
+        xs: "4px", sm: "8px", md: "12px", lg: "16px", xl: "20px", xxl: "24px",
+        xxxl: "32px", xxxxl: "40px", xxxxxl: "48px", section: "64px",
+      },
+      borderRadius: { xs: "6px", sm: "10px", md: "14px", lg: "18px", xl: "22px", xxl: "28px" },
+      fontSize: {
+        display: ["40px", { lineHeight: "46px" }],
+        h1: ["32px", { lineHeight: "39px" }],
+        h2: ["24px", { lineHeight: "31px" }],
+        h3: ["20px", { lineHeight: "27px" }],
+        "body-lg": ["18px", { lineHeight: "27px" }],
+        body: ["16px", { lineHeight: "24px" }],
+        "body-sm": ["14px", { lineHeight: "21px" }],
+        caption: ["12px", { lineHeight: "17px" }],
+        button: ["16px", { lineHeight: "22px" }],
+        stat: ["28px", { lineHeight: "34px" }],
+        "stat-sm": ["20px", { lineHeight: "26px" }],
+        "stat-lg": ["48px", { lineHeight: "55px" }],
+      },
+      boxShadow: {
+        sm: "0 2px 4px rgba(0, 0, 0, 0.16)",
+        md: "0 6px 12px rgba(0, 0, 0, 0.22)",
+        lg: "0 10px 20px rgba(0, 0, 0, 0.26)",
+        xl: "0 16px 28px rgba(0, 0, 0, 0.30)",
+        "ai-glow": "0 4px 16px rgba(231, 190, 115, 0.12)",
+        "primary-glow": "0 5px 14px rgba(231, 190, 115, 0.16)",
+      },
+    },
+  },
+  plugins: [],
+};

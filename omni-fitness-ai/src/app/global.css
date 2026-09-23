@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --color-primary: #E7BE73;
+  --color-primary-dark: #B88942;
+  --color-primary-light: #F5DCA7;
+  --color-accent: #F5DCA7;
+  --color-success: #34C759;
+  --color-warning: #FF9500;
+  --color-error: #FF3B30;
+  --color-info: #5AC8FA;
+  --color-background: #0C0B09;
+  --color-surface: #181611;
+  --color-surface-elevated: #221F18;
+  --color-surface-highlight: #2D281E;
+  --color-text-primary: #FAF6EE;
+  --color-text-secondary: #C7BFAF;
+  --color-text-tertiary: #ABA291;
+  --color-text-inverse: #171208;
+  --color-border: #40382A;
+  --color-border-light: #302B22;
+  --color-border-control: #80725A;
+  --color-ai-glow: #E7BE73;
+  --color-ai-surface: rgba(231, 190, 115, 0.10);
+}
+
+@layer base {
+  * { box-sizing: border-box; }
+
+  body {
+    @apply bg-background text-text-primary;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background: #E7BE73;
+    color: #171208;
+  }
+
+  :focus-visible {
+    outline: 2px solid #E7BE73;
+    outline-offset: 4px;
+  }
+
+  input, textarea { caret-color: #E7BE73; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "status": "READY",
+  "archive": "C:\\Users\\thaba\\AppData\\Local\\ThriveLens_300K_PC_Builder_Work\\ThriveLens_OpenFood_FoodR1_Kaggle_300K.zip.building",
+  "bytes": 6844486847,
+  "sha256": "4c378fc53d427fff808a2bfee7d923d5569355fd3794b5ffd5bfc3a4115d7f49",
+  "zip_entries": 302249,
+  "supervised_records": 302157,
+  "split_counts": {
+    "train": 242756,
+    "val": 6460,
+    "test": 52941
+  },
+  "task_counts": {
+    "train": {
+      "food_classification": 96754,
+      "produce_variety_classification": 137932,
+      "nutrition_estimation": 2690,
+      "full_food_analysis": 2690,
+      "ingredient_recognition": 2690
+    },
+    "val": {
+      "nutrition_estimation": 274,
+      "food_classification": 5638,
+      "ingredient_recognition": 274,
+      "full_food_analysis": 274
+    },
+    "test": {
+      "produce_variety_classification": 45961,
+      "food_classification": 5402,
+      "full_food_analysis": 526,
+      "ingredient_recognition": 526,
+      "nutrition_estimation": 526
+    }
+  },
+  "unique_referenced_images": 298667,
+  "leakage_safe_groups": 234080
+}

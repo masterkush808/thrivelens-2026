@@ -1,0 +1,76 @@
+# Dependencies
+node_modules/
+
+# Claude Code
+.claude/
+omni-fitness-ai/.claude/
+
+# Skills & OpenCode config
+.agents/
+.opencode/
+skills-lock.json
+
+# Expo
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+
+# Native
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# Metro
+.metro-health-check*
+
+# Debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+
+# macOS
+.DS_Store
+*.pem
+
+# Local env files
+.env
+.env*.local
+
+# TypeScript
+*.tsbuildinfo
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Generated native folders
+omni-fitness-ai/ios/
+omni-fitness-ai/android/
+
+# OS
+Thumbs.db
+
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+.venv/
+
+# Model weights / local artifacts (never commit)
+*.safetensors
+*.bin
+*.ckpt
+
+# Large training/data archives and build logs (notebooks & scripts stay in the repo)
+Training and Validation Model/*.zip
+Training and Validation Model/*.log
+Training and Validation Model/**/.git/
+**/qwen-vl-finetune/

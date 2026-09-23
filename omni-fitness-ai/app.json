@@ -1,0 +1,73 @@
+{
+  "expo": {
+    "name": "Thrive Lens",
+    "slug": "thrivelens",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/297b11a4-1998-4a78-8749-65a9fd0d3ba0.png",
+    "scheme": "thrivelens",
+    "userInterfaceStyle": "dark",
+    "assetBundlePatterns": [
+      "assets/ml/**/*",
+      "assets/images/**/*"
+    ],
+    "ios": {
+      "icon": "./assets/images/297b11a4-1998-4a78-8749-65a9fd0d3ba0.png"
+    },
+    "android": {
+      "predictiveBackGestureEnabled": false,
+      "icon": "./assets/images/297b11a4-1998-4a78-8749-65a9fd0d3ba0.png"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/297b11a4-1998-4a78-8749-65a9fd0d3ba0.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#0C0B09",
+          "image": "./assets/images/297b11a4-1998-4a78-8749-65a9fd0d3ba0.png",
+          "imageWidth": 240
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow $(PRODUCT_NAME) to access photos for food tracking.",
+          "cameraPermission": "Allow $(PRODUCT_NAME) to use camera for food photos."
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "color": "#E7BE73"
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to use the camera to scan food product barcodes."
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location to find real stores and gyms near you."
+        }
+      ],
+      "expo-secure-store",
+      "expo-sqlite"
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    },
+    "androidStatusBar": {
+      "barStyle": "light-content",
+      "backgroundColor": "#0C0B09"
+    }
+  }
+}

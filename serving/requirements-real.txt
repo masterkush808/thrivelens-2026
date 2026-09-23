@@ -1,0 +1,22 @@
+# Real (GPU) inference dependencies. Exact run provenance:
+#   thrivelens_run_manifest.json / pip_freeze.txt (Kaggle, 2026-09-15)
+# torch must match your CUDA host wheel (e.g. torch==2.10.0+cu128 on Linux).
+# This service expected to run on the same class of GPU box used for training
+# (T4-class, CUDA 12.x). It does NOT run in the Expo app.
+torch>=2.10,<3
+transformers==5.3.0
+accelerate==1.13.0
+peft==0.15.2
+bitsandbytes==0.49.2
+deepspeed==0.17.5
+trl==0.25.0
+safetensors==0.7.0
+numpy>=1.26,<3
+Pillow>=10,<12
+# Web serving + request path (not inference, but required to serve this process)
+fastapi>=0.115,<0.116
+uvicorn[standard]>=0.30,<0.31
+pydantic>=2,<3
+python-multipart>=0.0.9,<1
+httpx>=0.27,<1
+huggingface_hub>=0.26
