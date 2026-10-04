@@ -16,12 +16,17 @@
     },
     "android": {
       "predictiveBackGestureEnabled": false,
-      "icon": "./assets/images/297b11a4-1998-4a78-8749-65a9fd0d3ba0.png"
+      "icon": "./assets/images/297b11a4-1998-4a78-8749-65a9fd0d3ba0.png",
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION"
+      ]
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/297b11a4-1998-4a78-8749-65a9fd0d3ba0.png"
+      "favicon": "./public/pwa/favicon-32.png"
     },
     "plugins": [
       "expo-router",
@@ -68,6 +73,13 @@
     "androidStatusBar": {
       "barStyle": "light-content",
       "backgroundColor": "#0C0B09"
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "41808e02-7a2f-4669-a7c6-f7221c103efc"
+      }
+    },
+    "owner": "masterkush808"
   }
 }

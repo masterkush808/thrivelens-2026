@@ -1,0 +1,43 @@
+{
+  "name": "Thrive Lens",
+  "short_name": "Thrive Lens",
+  "description": "Track food, movement, workouts, and progress in one calm place.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0C0B09",
+  "theme_color": "#0C0B09",
+  "categories": ["health", "fitness", "lifestyle"],
+  "icons": [
+    {
+      "src": "/pwa/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa/icon-maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/pwa/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    { "name": "Track a workout", "url": "/workout" },
+    { "name": "Log food", "url": "/food-scanner" },
+    { "name": "Progress", "url": "/tracking" }
+  ]
+}

@@ -1,4 +1,5 @@
 import { Stack, useRouter, useSegments } from "expo-router";
+import Head from "expo-router/head";
 import { StatusBar } from "expo-status-bar";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { useEffect } from "react";
@@ -6,14 +7,19 @@ import { ActivityIndicator, Image, View } from "react-native";
 import { InspirationProvider } from "@/providers/InspirationProvider";
 import { LaunchInspiration } from "@/components/brand/LaunchInspiration";
 import { useMotionPreferences } from "@/hooks/useMotionPreferences";
+import { useServiceWorker } from "@/hooks/useServiceWorker";
 import { colors } from "@/theme";
 import { AuthProvider, useAuth } from "@/providers/AuthProvider";
 import { getCurrentProfile } from "@/data/profileRepository";
 import "./global.css";
 
 export default function RootLayout() {
+  useServiceWorker();
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
+      <Head>
+        <title>Thrive Lens</title>
+      </Head>
       <AuthProvider>
         <InspirationProvider>
           <StatusBar style="light" />
