@@ -16,7 +16,7 @@ interface CardProps {
 const variantStyles: Record<CardVariant, string> = {
   default: "bg-surface border border-border-light",
   elevated: "bg-surface-elevated border border-border",
-  ai: "bg-ai-surface border border-ai-glow/30",
+  ai: "bg-surface-elevated border border-ai-glow/30",
   workout: "bg-surface-elevated border border-border",
   meal: "bg-surface border border-border-light",
 };
@@ -29,7 +29,7 @@ export function Card({
   onPress,
 }: CardProps) {
   const classes = `${variantStyles[variant]} rounded-xxl p-5 ${className || ""}`;
-  const cardStyle = [variant === "ai" ? shadows.aiGlow : shadows.sm, style];
+  const cardStyle = [shadows.sm, style];
 
   if (onPress) {
     return (

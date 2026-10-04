@@ -37,6 +37,8 @@ export {
   workoutSessionsSince,
   workoutLogsForSession,
   workoutLogsSince,
+  allWorkoutLogs,
+  workoutLogsByExercise,
   insertProgressLog,
   recentProgressLogs,
   deleteWorkoutsForUser,

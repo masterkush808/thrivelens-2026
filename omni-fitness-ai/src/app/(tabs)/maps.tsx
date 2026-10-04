@@ -78,6 +78,7 @@ export default function MapsScreen() {
   const [loading, setLoading] = useState(false);
   const [locating, setLocating] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [directionsError, setDirectionsError] = useState<string | null>(null);
   const [queryDate, setQueryDate] = useState<string | null>(null);
 
   const params = useLocalSearchParams<{ query?: string | string[] }>();
@@ -227,6 +228,16 @@ export default function MapsScreen() {
             </View>
           ) : null}
 
+          {directionsError ? (
+            <View className="px-6 mb-6">
+              <Card variant="elevated">
+                <Text variant="body" className="text-text-secondary leading-5">
+                  {directionsError}
+                </Text>
+              </Card>
+            </View>
+          ) : null}
+
           {loading ? (
             <View className="px-6 mb-6">
               <View className="flex-row items-center gap-3 bg-surface-elevated rounded-xl py-4 px-4">
@@ -291,10 +302,14 @@ export default function MapsScreen() {
                       title="Directions"
                       icon={<Navigation size={16} color="#E7BE73" />}
                       onPress={async () => {
+                        setDirectionsError(null);
                         try {
                           await openDirections(place.lat, place.lng, place.name);
-                        } catch {
-                          // the maps app handles failure; nothing to show here
+                        } catch (caught) {
+                          setDirectionsError(
+                            (caught as PlacesError).message ??
+                              "Google Maps could not be opened.",
+                          );
                         }
                       }}
                     />

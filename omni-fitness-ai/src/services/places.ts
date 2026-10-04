@@ -286,24 +286,34 @@ export async function getCurrentLocation(): Promise<{ lat: number; lng: number }
   return { lat: position.coords.latitude, lng: position.coords.longitude };
 }
 
+/**
+ * Hands off to Google Maps turn-by-turn navigation on the device. These are
+ * public URL schemes, so no API key or SDK setup is required.
+ *
+ * `openURL` is attempted directly instead of being gated behind `canOpenURL`,
+ * because Android 11+ reports `false` for custom schemes that are not declared
+ * in a `<queries>` manifest element even when the target app is installed.
+ */
 export async function openDirections(
   lat: number,
   lng: number,
   name: string,
 ): Promise<void> {
-  const label = encodeURIComponent(name);
   const coords = `${lat},${lng}`;
   let url: string;
-  if (Platform.OS === "ios") {
-    url = `http://maps.apple.com/?daddr=${coords}&q=${label}`;
-  } else if (Platform.OS === "android") {
-    url = `geo:${coords}?q=${coords}(${label})`;
+  if (Platform.OS === "android") {
+    url = `google.navigation:q=${coords}&mode=d`;
+  } else if (Platform.OS === "ios") {
+    url = `comgooglemaps://?daddr=${coords}&directionsmode=driving`;
   } else {
-    url = `https://www.google.com/maps/dir/?api=1&destination=${coords}`;
+    url = `https://www.google.com/maps/dir/?api=1&destination=${coords}&travelmode=driving`;
   }
-  const supported = await Linking.canOpenURL(url);
-  if (!supported) {
-    throw placesError("unavailable", "No maps app is available for directions");
+  try {
+    await Linking.openURL(url);
+  } catch {
+    throw placesError(
+      "unavailable",
+      `Google Maps could not be opened for ${name}. Install Google Maps, then try Directions again.`,
+    );
   }
-  await Linking.openURL(url);
 }

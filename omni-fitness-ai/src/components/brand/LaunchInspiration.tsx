@@ -29,6 +29,9 @@ export function LaunchInspiration({ eligible }: { eligible: boolean }) {
           <Text style={styles.eyebrow}>A MOMENT FOR YOU</Text>
           <Text accessibilityRole="header" style={styles.title}>{message.title}</Text>
           <Text style={styles.message}>{message.message}</Text>
+          {message.attribution ? (
+            <Text style={styles.attribution}>{message.attribution}</Text>
+          ) : null}
           <View style={styles.rule} />
           <Text style={styles.note}>Your pace. Your progress. Your next step.</Text>
           <Pressable accessibilityRole="button" onPress={dismiss} style={({ pressed }) => [styles.cta, pressed && { opacity: 0.82 }]}>
@@ -49,6 +52,14 @@ const styles = StyleSheet.create({
   eyebrow: { color: colors.primary, fontSize: 11, lineHeight: 18, letterSpacing: 2.3, fontWeight: '600', textAlign: 'center', marginBottom: 18 },
   title: { fontSize: 32, lineHeight: 40, fontWeight: '600', color: colors.textPrimary, textAlign: 'center', marginBottom: 16 },
   message: { color: colors.textSecondary, fontSize: 18, lineHeight: 29, textAlign: 'center' },
+  attribution: {
+    color: colors.textTertiary,
+    fontSize: 13,
+    lineHeight: 20,
+    fontStyle: 'italic',
+    textAlign: 'center',
+    marginTop: 14,
+  },
   rule: { backgroundColor: colors.primaryDark, height: 1, width: 44, marginTop: 28, marginBottom: 20 },
   note: { color: colors.textTertiary, textAlign: 'center', fontSize: 13, lineHeight: 20, marginBottom: 28 },
   cta: { width: '100%', borderRadius: 20, overflow: 'hidden' },

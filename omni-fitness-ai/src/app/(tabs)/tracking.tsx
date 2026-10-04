@@ -1,17 +1,13 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { PremiumScreen } from "@/components/brand/PremiumScreen";
-import { View, ScrollView, Pressable, TextInput, Alert } from "react-native";
+import { View, ScrollView, Pressable, TextInput, Alert, RefreshControl } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Text, Card, Button } from "@/components/ui";
+import { StrengthSection } from "@/components/strength/StrengthSection";
 import { getTodayFoodSummary, getTodayFoodLogs } from "@/data/foodRepository";
 import { getCurrentProfile } from "@/data/profileRepository";
-import {
-  getWorkoutCountSince,
-  getWorkoutVolumeSince,
-  getRecentWorkouts,
-} from "@/data/workoutRepository";
 import { getWeightTrend, logWeight } from "@/data/progressRepository";
-import { FoodLog, ProgressLog, WorkoutSession } from "@/db";
+import { FoodLog, ProgressLog } from "@/db";
 
 const timeFilters = ["7D", "30D", "3M", "6M"];
 
@@ -43,65 +39,51 @@ export default function TrackingScreen() {
     calorie_target: number | null;
     protein_target: number | null;
   } | null>(null);
-  const [workoutCount, setWorkoutCount] = useState(0);
-  const [workoutVolume, setWorkoutVolume] = useState(0);
-  const [recentWorkouts, setRecentWorkouts] = useState<WorkoutSession[]>([]);
   const [weightTrend, setWeightTrend] = useState<ProgressLog[]>([]);
   const [weightInput, setWeightInput] = useState("");
   const [savingWeight, setSavingWeight] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+  const [reloadToken, setReloadToken] = useState(0);
 
-  useEffect(() => {
-    let mounted = true;
-    (async () => {
-      try {
-        const [summary, logs, currentProfile, workouts, trend] = await Promise.all([
-          getTodayFoodSummary(),
-          getTodayFoodLogs(),
-          getCurrentProfile().catch(() => null),
-          getRecentWorkouts(10).catch(() => []),
-          getWeightTrend(20).catch(() => []),
-        ]);
-        if (!mounted) return;
-        setToday(summary);
-        setRecentLogs(logs);
-        setTodayCount(logs.length);
-        setRecentWorkouts(workouts);
-        setWeightTrend(trend);
-        setProfile({
-          weight: currentProfile?.weight ?? null,
-          height: currentProfile?.height ?? null,
-          age: currentProfile?.age ?? null,
-          goal: currentProfile?.goal ?? null,
-          calorie_target: currentProfile?.calorie_target ?? null,
-          protein_target: currentProfile?.protein_target ?? null,
-        });
-      } catch {}
-    })();
-    return () => {
-      mounted = false;
-    };
+  const loadOverview = useCallback(async () => {
+    const [summary, logs, currentProfile, trend] = await Promise.all([
+      getTodayFoodSummary(),
+      getTodayFoodLogs(),
+      getCurrentProfile().catch(() => null),
+      getWeightTrend(20).catch(() => []),
+    ]);
+    setToday(summary);
+    setRecentLogs(logs);
+    setTodayCount(logs.length);
+    setWeightTrend(trend);
+    setProfile({
+      weight: currentProfile?.weight ?? null,
+      height: currentProfile?.height ?? null,
+      age: currentProfile?.age ?? null,
+      goal: currentProfile?.goal ?? null,
+      calorie_target: currentProfile?.calorie_target ?? null,
+      protein_target: currentProfile?.protein_target ?? null,
+    });
   }, []);
 
   useEffect(() => {
-    let mounted = true;
     (async () => {
       try {
-        const start = new Date();
-        start.setHours(0, 0, 0, 0);
-        start.setDate(start.getDate() - (selectedTime === "7D" ? 7 : selectedTime === "30D" ? 30 : 90));
-        const [count, volume] = await Promise.all([
-          getWorkoutCountSince(start.getTime()),
-          getWorkoutVolumeSince(start.getTime()),
-        ]);
-        if (!mounted) return;
-        setWorkoutCount(count);
-        setWorkoutVolume(volume);
+        await loadOverview();
       } catch {}
     })();
-    return () => {
-      mounted = false;
-    };
-  }, [selectedTime]);
+  }, [loadOverview, reloadToken]);
+
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    try {
+      await loadOverview();
+      setReloadToken((token) => token + 1);
+    } catch {
+    } finally {
+      setRefreshing(false);
+    }
+  }, [loadOverview]);
 
   const days = useMemo(() => {
     const now = new Date();
@@ -144,6 +126,14 @@ export default function TrackingScreen() {
         <ScrollView
           contentContainerStyle={{ paddingBottom: 100 }}
           showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              tintColor="#E7BE73"
+              colors={["#E7BE73"]}
+            />
+          }
         >
           <View className="px-6 py-4">
             <Text variant="h1">Tracking</Text>
@@ -421,53 +411,7 @@ export default function TrackingScreen() {
           </View>
 
           <View className="px-6 mb-6">
-            <Text variant="h3" className="mb-4">
-              Strength Progression
-            </Text>
-            <Card variant="elevated">
-              {recentWorkouts.length > 0 ? (
-                <>
-                  <View className="flex-row justify-between mb-4">
-                    <View className="items-center">
-                      <Text variant="statSmall" className="text-primary">
-                        {workoutCount}
-                      </Text>
-                      <Text variant="caption" className="text-text-tertiary">
-                        Sessions ({selectedTime})
-                      </Text>
-                    </View>
-                    <View className="items-center">
-                      <Text variant="statSmall" className="text-success">
-                        {Math.round(workoutVolume).toLocaleString()} kg
-                      </Text>
-                      <Text variant="caption" className="text-text-tertiary">
-                        Total volume
-                      </Text>
-                    </View>
-                  </View>
-                  <View className="gap-1 mb-4">
-                    {recentWorkouts.slice(0, 5).map((session) => (
-                      <View key={session.id} className="flex-row justify-between border-b border-border/50 py-1">
-                        <Text variant="bodySmall" className="text-text-secondary">
-                          {dateLabel(session.createdAt)}
-                        </Text>
-                        <Text variant="bodySmall" className="text-text-primary font-semibold">
-                          {Math.round(session.totalVolume ?? 0).toLocaleString()} kg moved
-                        </Text>
-                      </View>
-                    ))}
-                  </View>
-                </>
-              ) : (
-                <Text variant="body" className="text-text-primary font-semibold">
-                  No strength data yet
-                </Text>
-              )}
-              <Text variant="bodySmall" className="text-text-secondary mt-2">
-                Every completed workout session feeds this chart automatically.
-                Log one from the Workout tab to see it here.
-              </Text>
-            </Card>
+            <StrengthSection rangeLabel={selectedTime} />
           </View>
         </ScrollView>
       </SafeAreaView>

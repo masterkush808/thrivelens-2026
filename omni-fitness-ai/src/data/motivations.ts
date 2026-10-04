@@ -1,10 +1,12 @@
-export type MotivationCategory = 'begin' | 'move' | 'nourish' | 'recover' | 'grow';
+export type MotivationCategory = 'begin' | 'move' | 'nourish' | 'recover' | 'grow' | 'persist';
 
 export interface Motivation {
   id: string;
   title: string;
   message: string;
   category: MotivationCategory;
+  /** Present on quoted lines so the speaker is always credited. */
+  attribution?: string;
 }
 
 export const CATEGORY_LABELS: Record<MotivationCategory, string> = {
@@ -13,6 +15,7 @@ export const CATEGORY_LABELS: Record<MotivationCategory, string> = {
   nourish: 'Everyday nourishment',
   recover: 'Rest and recovery',
   grow: 'Steady growth',
+  persist: 'Keep moving',
 };
 
 export const MOTIVATIONS: readonly Motivation[] = [
@@ -116,4 +119,28 @@ export const MOTIVATIONS: readonly Motivation[] = [
   { id: 'grow-018', title: 'Keep a Reminder', message: 'Write down one useful lesson from today so your future self has something kind to return to.', category: 'grow' },
   { id: 'grow-019', title: 'Choose What Matters', message: 'A meaningful goal can make room for your relationships, responsibilities, and the ordinary pleasures of daily life.', category: 'grow' },
   { id: 'grow-020', title: 'Continue With Care', message: 'Your next step can be a small adjustment, a request for support, or a well-timed pause.', category: 'grow' },
+  { id: 'persist-001', title: 'Keep Going Anyway', message: 'Success is not final, failure is not fatal: it is the courage to continue that counts.', category: 'persist', attribution: 'Winston Churchill' },
+  { id: 'persist-002', title: 'Love The Work', message: 'The only way to do great work is to love what you do. If you haven’t found it yet, keep looking.', category: 'persist', attribution: 'Steve Jobs, Stanford Commencement, 2005' },
+  { id: 'persist-003', title: 'Discipline Is Freedom', message: 'Discipline equals freedom.', category: 'persist', attribution: 'Jocko Willink' },
+  { id: 'persist-004', title: 'No Accident', message: 'Success is no accident. It is hard work, perseverance, learning, studying, sacrifice, and love of what you are doing.', category: 'persist', attribution: 'Pelé' },
+  { id: 'persist-005', title: 'In The Arena', message: 'The credit belongs not to the man who merely sees the conflict, but to the man who is actually in the arena, whose face is marred by dust and sweat and blood.', category: 'persist', attribution: 'Theodore Roosevelt, "Citizenship in a Republic", 1910' },
+  { id: 'persist-006', title: 'So Few', message: 'Never in the field of human conflict was so much owed by so many to so few.', category: 'persist', attribution: 'Winston Churchill, "The Few", 1940' },
+  { id: 'persist-007', title: 'Until It Is Done', message: 'It always seems impossible until it is done.', category: 'persist', attribution: 'Nelson Mandela' },
+  { id: 'persist-008', title: 'Nothing Works Without You', message: 'Nothing will work unless you do.', category: 'persist', attribution: 'Maya Angelou' },
+  { id: 'persist-009', title: 'Indomitable Will', message: 'Strength does not come from physical capacity. It comes from an indomitable will.', category: 'persist', attribution: 'Mahatma Gandhi' },
+  { id: 'persist-010', title: 'Today Is The Preparation', message: 'The best preparation for tomorrow is doing your best today.', category: 'persist', attribution: 'H. Jackson Brown Jr.' },
+  { id: 'persist-011', title: 'Rise Again', message: 'Fall seven times, stand up eight.', category: 'persist', attribution: 'Japanese proverb' },
+  { id: 'persist-012', title: 'Take The Shot', message: 'You miss 100% of the shots you don’t take.', category: 'persist', attribution: 'Wayne Gretzky' },
+  { id: 'persist-013', title: 'Grace Under Pressure', message: 'Courage is grace under pressure.', category: 'persist', attribution: 'Ernest Hemingway' },
+  { id: 'persist-014', title: 'Float And Sting', message: 'Float like a butterfly, sting like a bee.', category: 'persist', attribution: 'Muhammad Ali' },
+  { id: 'persist-015', title: 'Small Things Together', message: 'Great things are not done by impulse, but by a series of small things brought together.', category: 'persist', attribution: 'Vincent van Gogh' },
+  { id: 'persist-016', title: 'Halfway There', message: 'Believe you can and you’re halfway there.', category: 'persist', attribution: 'Theodore Roosevelt' },
+  { id: 'persist-017', title: 'Start Where You Are', message: 'Start where you are. Use what you have. Do what you can.', category: 'persist', attribution: 'Arthur Ashe' },
+  { id: 'persist-018', title: 'Want It As Much As Breath', message: 'When you want to succeed as bad as you want to breathe, then you’ll be successful.', category: 'persist', attribution: 'Eric Thomas' },
+  { id: 'persist-019', title: 'A Winner After Losing', message: 'A winner is someone who never gives up when they lose.', category: 'persist', attribution: 'Wellington Ditmar' },
+  { id: 'persist-020', title: 'Toward Your Dreams', message: 'Go confidently in the direction of your dreams.', category: 'persist', attribution: 'Henry David Thoreau' },
+  { id: 'persist-021', title: 'Choose The Hard Road', message: 'Hard choices, easy life. Easy choices, hard life.', category: 'persist', attribution: 'Jerzy Gregorek' },
+  { id: 'persist-022', title: 'Conquer Yourself', message: 'It is not the mountain we conquer, but ourselves.', category: 'persist', attribution: 'Sir Edmund Hillary' },
+  { id: 'persist-023', title: 'Still Rising', message: 'I have a dream that one day this nation will rise up.', category: 'persist', attribution: 'Martin Luther King Jr., "I Have a Dream", 1963' },
+  { id: 'persist-024', title: 'Getting Started', message: 'The secret of getting ahead is getting started.', category: 'persist', attribution: 'Mark Twain' },
 ];

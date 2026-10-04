@@ -90,6 +90,29 @@ export async function workoutLogsForSession(sessionId: string): Promise<WorkoutL
     .orderBy(desc(workoutLogs.createdAt));
 }
 
+export async function allWorkoutLogs(
+  limit: number = 500,
+  userId?: string,
+): Promise<WorkoutLog[]> {
+  const query = db.select().from(workoutLogs);
+  const filtered = userId ? query.where(eq(workoutLogs.userId, userId)) : query;
+  return filtered.orderBy(desc(workoutLogs.loggedAt)).limit(limit);
+}
+
+export async function workoutLogsByExercise(
+  exerciseId: string,
+  limit: number = 200,
+  userId?: string,
+): Promise<WorkoutLog[]> {
+  const query = db.select().from(workoutLogs);
+  const filtered = userId
+    ? query.where(
+        and(eq(workoutLogs.exerciseId, exerciseId), eq(workoutLogs.userId, userId)),
+      )
+    : query.where(eq(workoutLogs.exerciseId, exerciseId));
+  return filtered.orderBy(desc(workoutLogs.loggedAt)).limit(limit);
+}
+
 export async function workoutLogsSince(
   epochMs: number,
   limit: number = 200,

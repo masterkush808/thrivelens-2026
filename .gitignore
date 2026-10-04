@@ -53,6 +53,14 @@ yarn-error.*
 omni-fitness-ai/ios/
 omni-fitness-ai/android/
 
+# Exercise library: local install backups (rollback receipts live here only)
+omni-fitness-ai/.thrivelens-library-backups/
+
+# Vendor media kit (114 MB, duplicated inside). The app consumes the installed
+# copy at omni-fitness-ai/assets/human-exercise-library/, which IS committed.
+# Keep this drop out of git; re-extract from the original ZIP if ever needed.
+Exercise Library Setup/
+
 # OS
 Thumbs.db
 
@@ -68,6 +76,10 @@ __pycache__/
 *.safetensors
 *.bin
 *.ckpt
+
+# ...except the app's on-device food classifier weights, which the Expo bundle
+# requires at build time (metro.config.js whitelists the .bin extension).
+!omni-fitness-ai/assets/ml/**/*.bin
 
 # Large training/data archives and build logs (notebooks & scripts stay in the repo)
 Training and Validation Model/*.zip

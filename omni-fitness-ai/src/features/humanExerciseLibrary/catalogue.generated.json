@@ -1,0 +1,2035 @@
+{
+  "schemaVersion": 1,
+  "version": "TL-HUMAN-MESH-2.0",
+  "source": "original_continuous_human_mesh",
+  "status": "GENERATED_MEDIA_TECHNIQUE_REVIEW_PENDING",
+  "noExternalMediaUsed": true,
+  "noWatermarksAdded": true,
+  "bodyParts": [
+    {
+      "id": "chest",
+      "name": "Chest",
+      "icon": "dumbbell"
+    },
+    {
+      "id": "shoulders",
+      "name": "Shoulders",
+      "icon": "dumbbell"
+    },
+    {
+      "id": "biceps",
+      "name": "Biceps",
+      "icon": "dumbbell"
+    },
+    {
+      "id": "triceps",
+      "name": "Triceps",
+      "icon": "dumbbell"
+    },
+    {
+      "id": "back",
+      "name": "Back",
+      "icon": "dumbbell"
+    },
+    {
+      "id": "quads",
+      "name": "Quadriceps",
+      "icon": "dumbbell"
+    },
+    {
+      "id": "hamstrings",
+      "name": "Hamstrings",
+      "icon": "dumbbell"
+    },
+    {
+      "id": "abs",
+      "name": "Abdominals",
+      "icon": "dumbbell"
+    },
+    {
+      "id": "glutes",
+      "name": "Glutes",
+      "icon": "dumbbell"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "barbell-bench-press",
+      "name": "Barbell Bench Press",
+      "bodyPart": "chest",
+      "type": "Strength",
+      "equipment": "Barbell",
+      "mechanics": "Compound",
+      "level": "Beginner",
+      "videoPath": "",
+      "description": "Lie on a flat bench, grip the bar slightly wider than shoulder width, lower it to mid-chest with control, then press it back up. Targets the pecs, anterior deltoids and triceps.",
+      "demonstrationVariant": "Flat bench; barbell",
+      "sideDemonstrated": "Bilateral",
+      "illustrationSummary": "The figure presses a barbell above the chest while supported by a flat bench.",
+      "sourceDescription": "Lie on a flat bench, grip the bar slightly wider than shoulder width, lower it to mid-chest with control, then press it back up. Targets the pecs, anterior deltoids and triceps.",
+      "sourceMechanics": "Compound",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/chest/barbell-bench-press/male/poster.png",
+          "mp4": "media/chest/barbell-bench-press/male/animation.mp4",
+          "webp": "media/chest/barbell-bench-press/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/chest/barbell-bench-press/female/poster.png",
+          "mp4": "media/chest/barbell-bench-press/female/animation.mp4",
+          "webp": "media/chest/barbell-bench-press/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "incline-dumbbell-press",
+      "name": "Incline Dumbbell Press",
+      "bodyPart": "chest",
+      "type": "Strength",
+      "equipment": "Dumbbells",
+      "mechanics": "Compound",
+      "level": "Beginner",
+      "videoPath": "",
+      "description": "Press two dumbbells from a bench set to a 30-45 degree incline. Biases the upper pectoralis major and keeps constant tension through the movement.",
+      "demonstrationVariant": "Inclined bench; two dumbbells",
+      "sideDemonstrated": "Bilateral",
+      "illustrationSummary": "Two dumbbells move away from and back toward the upper chest on an inclined bench.",
+      "sourceDescription": "Press two dumbbells from a bench set to a 30-45 degree incline. Biases the upper pectoralis major and keeps constant tension through the movement.",
+      "sourceMechanics": "Compound",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/chest/incline-dumbbell-press/male/poster.png",
+          "mp4": "media/chest/incline-dumbbell-press/male/animation.mp4",
+          "webp": "media/chest/incline-dumbbell-press/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/chest/incline-dumbbell-press/female/poster.png",
+          "mp4": "media/chest/incline-dumbbell-press/female/animation.mp4",
+          "webp": "media/chest/incline-dumbbell-press/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "dumbbell-fly",
+      "name": "Dumbbell Fly",
+      "bodyPart": "chest",
+      "type": "Strength",
+      "equipment": "Dumbbells",
+      "mechanics": "Isolation",
+      "level": "Beginner",
+      "videoPath": "",
+      "description": "With a slight elbow bend, lower the dumbbells in a wide arc until a comfortable chest stretch, then bring them back together. Isolates the pecs.",
+      "demonstrationVariant": "Flat bench; two dumbbells",
+      "sideDemonstrated": "Bilateral",
+      "illustrationSummary": "The arms open and close across the chest with a modest, maintained elbow bend.",
+      "sourceDescription": "With a slight elbow bend, lower the dumbbells in a wide arc until a comfortable chest stretch, then bring them back together. Isolates the pecs.",
+      "sourceMechanics": "Isolation",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/chest/dumbbell-fly/male/poster.png",
+          "mp4": "media/chest/dumbbell-fly/male/animation.mp4",
+          "webp": "media/chest/dumbbell-fly/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/chest/dumbbell-fly/female/poster.png",
+          "mp4": "media/chest/dumbbell-fly/female/animation.mp4",
+          "webp": "media/chest/dumbbell-fly/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "push-up",
+      "name": "Push-Up",
+      "bodyPart": "chest",
+      "type": "Strength",
+      "equipment": "Bodyweight",
+      "mechanics": "Compound",
+      "level": "Beginner",
+      "videoPath": "",
+      "description": "From a straight-body plank, lower your chest to the floor and press back up. A foundational chest, shoulder and core exercise needing no equipment.",
+      "demonstrationVariant": "Floor; straight-body push-up",
+      "sideDemonstrated": "Bilateral",
+      "illustrationSummary": "The body rises and lowers as one aligned segment while the elbows extend and bend.",
+      "sourceDescription": "From a straight-body plank, lower your chest to the floor and press back up. A foundational chest, shoulder and core exercise needing no equipment.",
+      "sourceMechanics": "Compound",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/chest/push-up/male/poster.png",
+          "mp4": "media/chest/push-up/male/animation.mp4",
+          "webp": "media/chest/push-up/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/chest/push-up/female/poster.png",
+          "mp4": "media/chest/push-up/female/animation.mp4",
+          "webp": "media/chest/push-up/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "cable-crossover",
+      "name": "Cable Crossover",
+      "bodyPart": "chest",
+      "type": "Strength",
+      "equipment": "Cable",
+      "mechanics": "Isolation",
+      "level": "Intermediate",
+      "videoPath": "",
+      "description": "With pulleys set high, bring the handles down and together across your body with a slight bend in the elbows. Finishes the outer chest.",
+      "demonstrationVariant": "Standing; high cable pulleys",
+      "sideDemonstrated": "Bilateral",
+      "illustrationSummary": "Two high cables are drawn inward and downward in front of the torso.",
+      "sourceDescription": "With pulleys set high, bring the handles down and together across your body with a slight bend in the elbows. Finishes the outer chest.",
+      "sourceMechanics": "Isolation",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/chest/cable-crossover/male/poster.png",
+          "mp4": "media/chest/cable-crossover/male/animation.mp4",
+          "webp": "media/chest/cable-crossover/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/chest/cable-crossover/female/poster.png",
+          "mp4": "media/chest/cable-crossover/female/animation.mp4",
+          "webp": "media/chest/cable-crossover/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "overhead-press",
+      "name": "Overhead Press",
+      "bodyPart": "shoulders",
+      "type": "Strength",
+      "equipment": "Barbell",
+      "mechanics": "Compound",
+      "level": "Intermediate",
+      "videoPath": "",
+      "description": "Press the bar from the front of your shoulders to full lockout overhead. Builds the delts, upper chest and triceps while demanding core stability.",
+      "demonstrationVariant": "Standing barbell press",
+      "sideDemonstrated": "Bilateral",
+      "illustrationSummary": "The barbell travels from the front of the shoulders to an overhead position.",
+      "sourceDescription": "Press the bar from the front of your shoulders to full lockout overhead. Builds the delts, upper chest and triceps while demanding core stability.",
+      "sourceMechanics": "Compound",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/shoulders/overhead-press/male/poster.png",
+          "mp4": "media/shoulders/overhead-press/male/animation.mp4",
+          "webp": "media/shoulders/overhead-press/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/shoulders/overhead-press/female/poster.png",
+          "mp4": "media/shoulders/overhead-press/female/animation.mp4",
+          "webp": "media/shoulders/overhead-press/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "dumbbell-shoulder-press",
+      "name": "Dumbbell Shoulder Press",
+      "bodyPart": "shoulders",
+      "type": "Strength",
+      "equipment": "Dumbbells",
+      "mechanics": "Compound",
+      "level": "Beginner",
+      "videoPath": "",
+      "description": "Seated or standing, press both dumbbells from shoulder height to overhead and lower with control. A staple for overall shoulder size.",
+      "demonstrationVariant": "Seated; two dumbbells",
+      "sideDemonstrated": "Bilateral",
+      "illustrationSummary": "The seated figure presses two dumbbells overhead and returns them toward the shoulders.",
+      "sourceDescription": "Seated or standing, press both dumbbells from shoulder height to overhead and lower with control. A staple for overall shoulder size.",
+      "sourceMechanics": "Compound",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/shoulders/dumbbell-shoulder-press/male/poster.png",
+          "mp4": "media/shoulders/dumbbell-shoulder-press/male/animation.mp4",
+          "webp": "media/shoulders/dumbbell-shoulder-press/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/shoulders/dumbbell-shoulder-press/female/poster.png",
+          "mp4": "media/shoulders/dumbbell-shoulder-press/female/animation.mp4",
+          "webp": "media/shoulders/dumbbell-shoulder-press/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "lateral-raise",
+      "name": "Lateral Raise",
+      "bodyPart": "shoulders",
+      "type": "Strength",
+      "equipment": "Dumbbells",
+      "mechanics": "Isolation",
+      "level": "Beginner",
+      "videoPath": "",
+      "description": "With a slight elbow bend, raise the dumbbells out to the sides to shoulder height and lower slowly. Directly targets the lateral deltoid for width.",
+      "demonstrationVariant": "Standing; two dumbbells",
+      "sideDemonstrated": "Bilateral",
+      "illustrationSummary": "The arms lift outward toward shoulder height while the torso remains still.",
+      "sourceDescription": "With a slight elbow bend, raise the dumbbells out to the sides to shoulder height and lower slowly. Directly targets the lateral deltoid for width.",
+      "sourceMechanics": "Isolation",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/shoulders/lateral-raise/male/poster.png",
+          "mp4": "media/shoulders/lateral-raise/male/animation.mp4",
+          "webp": "media/shoulders/lateral-raise/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/shoulders/lateral-raise/female/poster.png",
+          "mp4": "media/shoulders/lateral-raise/female/animation.mp4",
+          "webp": "media/shoulders/lateral-raise/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "rear-delt-fly",
+      "name": "Rear Delt Fly",
+      "bodyPart": "shoulders",
+      "type": "Strength",
+      "equipment": "Dumbbells",
+      "mechanics": "Isolation",
+      "level": "Beginner",
+      "videoPath": "",
+      "description": "Hinged forward at the hips, open the arms out to the sides, squeezing the rear delts, then lower under control. Balances the rear shoulder.",
+      "demonstrationVariant": "Hip hinge; two dumbbells",
+      "sideDemonstrated": "Bilateral",
+      "illustrationSummary": "From a forward hip hinge, the arms open laterally and return beneath the shoulders.",
+      "sourceDescription": "Hinged forward at the hips, open the arms out to the sides, squeezing the rear delts, then lower under control. Balances the rear shoulder.",
+      "sourceMechanics": "Isolation",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/shoulders/rear-delt-fly/male/poster.png",
+          "mp4": "media/shoulders/rear-delt-fly/male/animation.mp4",
+          "webp": "media/shoulders/rear-delt-fly/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/shoulders/rear-delt-fly/female/poster.png",
+          "mp4": "media/shoulders/rear-delt-fly/female/animation.mp4",
+          "webp": "media/shoulders/rear-delt-fly/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "face-pull",
+      "name": "Face Pull",
+      "bodyPart": "shoulders",
+      "type": "Strength",
+      "equipment": "Cable",
+      "mechanics": "Isolation",
+      "level": "Beginner",
+      "videoPath": "",
+      "description": "Pull a rope attachment toward your face, elbows high and externally rotated at the end of the motion. Trains the rear delts and upper back.",
+      "demonstrationVariant": "Standing; high cable rope",
+      "sideDemonstrated": "Bilateral",
+      "illustrationSummary": "A rope handle is drawn toward the face as the hands separate.",
+      "sourceDescription": "Pull a rope attachment toward your face, elbows high and externally rotated at the end of the motion. Trains the rear delts and upper back.",
+      "sourceMechanics": "Isolation",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/shoulders/face-pull/male/poster.png",
+          "mp4": "media/shoulders/face-pull/male/animation.mp4",
+          "webp": "media/shoulders/face-pull/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/shoulders/face-pull/female/poster.png",
+          "mp4": "media/shoulders/face-pull/female/animation.mp4",
+          "webp": "media/shoulders/face-pull/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "barbell-curl",
+      "name": "Barbell Curl",
+      "bodyPart": "biceps",
+      "type": "Strength",
+      "equipment": "Barbell",
+      "mechanics": "Isolation",
+      "level": "Beginner",
+      "videoPath": "",
+      "description": "Keeping the elbows pinned to your sides, curl the bar up to shoulder height and lower with control. A direct biceps builder.",
+      "demonstrationVariant": "Standing; straight barbell",
+      "sideDemonstrated": "Bilateral",
+      "illustrationSummary": "The barbell rises through elbow flexion while the upper arms remain close to the torso.",
+      "sourceDescription": "Keeping the elbows pinned to your sides, curl the bar up to shoulder height and lower with control. A direct biceps builder.",
+      "sourceMechanics": "Isolation",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/biceps/barbell-curl/male/poster.png",
+          "mp4": "media/biceps/barbell-curl/male/animation.mp4",
+          "webp": "media/biceps/barbell-curl/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/biceps/barbell-curl/female/poster.png",
+          "mp4": "media/biceps/barbell-curl/female/animation.mp4",
+          "webp": "media/biceps/barbell-curl/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "dumbbell-curl",
+      "name": "Dumbbell Curl",
+      "bodyPart": "biceps",
+      "type": "Strength",
+      "equipment": "Dumbbells",
+      "mechanics": "Isolation",
+      "level": "Beginner",
+      "videoPath": "",
+      "description": "Curl each dumbbell while keeping the elbow still. Variation: supinate the wrist (palm up) at the top to maximize biceps activation.",
+      "demonstrationVariant": "Standing; simultaneous dumbbell curl",
+      "sideDemonstrated": "Bilateral",
+      "illustrationSummary": "Both elbows bend to raise the dumbbells, then extend to lower them.",
+      "sourceDescription": "Curl each dumbbell while keeping the elbow still. Variation: supinate the wrist (palm up) at the top to maximize biceps activation.",
+      "sourceMechanics": "Isolation",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/biceps/dumbbell-curl/male/poster.png",
+          "mp4": "media/biceps/dumbbell-curl/male/animation.mp4",
+          "webp": "media/biceps/dumbbell-curl/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/biceps/dumbbell-curl/female/poster.png",
+          "mp4": "media/biceps/dumbbell-curl/female/animation.mp4",
+          "webp": "media/biceps/dumbbell-curl/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "hammer-curl",
+      "name": "Hammer Curl",
+      "bodyPart": "biceps",
+      "type": "Strength",
+      "equipment": "Dumbbells",
+      "mechanics": "Isolation",
+      "level": "Beginner",
+      "videoPath": "",
+      "description": "Curl with the palms facing each other (neutral grip). Emphasizes the brachialis and brachioradialis, adding thickness to the arm.",
+      "demonstrationVariant": "Standing; neutral-oriented dumbbells",
+      "sideDemonstrated": "Bilateral",
+      "illustrationSummary": "The elbows flex with neutral hand orientation. Dumbbell axes rotate with the forearms rather than remaining collinear with the forearm bones.",
+      "sourceDescription": "Curl with the palms facing each other (neutral grip). Emphasizes the brachialis and brachioradialis, adding thickness to the arm.",
+      "sourceMechanics": "Isolation",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/biceps/hammer-curl/male/poster.png",
+          "mp4": "media/biceps/hammer-curl/male/animation.mp4",
+          "webp": "media/biceps/hammer-curl/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/biceps/hammer-curl/female/poster.png",
+          "mp4": "media/biceps/hammer-curl/female/animation.mp4",
+          "webp": "media/biceps/hammer-curl/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "preacher-curl",
+      "name": "Preacher Curl",
+      "bodyPart": "biceps",
+      "type": "Strength",
+      "equipment": "E-Z Bar",
+      "mechanics": "Isolation",
+      "level": "Intermediate",
+      "videoPath": "",
+      "description": "Curl the E-Z bar against a preacher bench pad. Limits shoulder involvement and the range is fixed, so strict form matters.",
+      "demonstrationVariant": "Seated; EZ bar and sloped arm pad",
+      "sideDemonstrated": "Bilateral",
+      "illustrationSummary": "An EZ bar rises and lowers while the upper arms are supported by a preacher pad.",
+      "sourceDescription": "Curl the E-Z bar against a preacher bench pad. Limits shoulder involvement and the range is fixed, so strict form matters.",
+      "sourceMechanics": "Isolation",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/biceps/preacher-curl/male/poster.png",
+          "mp4": "media/biceps/preacher-curl/male/animation.mp4",
+          "webp": "media/biceps/preacher-curl/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/biceps/preacher-curl/female/poster.png",
+          "mp4": "media/biceps/preacher-curl/female/animation.mp4",
+          "webp": "media/biceps/preacher-curl/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "cable-curl",
+      "name": "Cable Curl",
+      "bodyPart": "biceps",
+      "type": "Strength",
+      "equipment": "Cable",
+      "mechanics": "Isolation",
+      "level": "Beginner",
+      "videoPath": "",
+      "description": "Curl a straight or E-Z bar attachment on a low pulley. Cables keep the muscle under constant tension through the whole rep.",
+      "demonstrationVariant": "Standing; low cable, straight handle",
+      "sideDemonstrated": "Bilateral",
+      "illustrationSummary": "The handle rises through elbow flexion with the cable routed to a low pulley.",
+      "sourceDescription": "Curl a straight or E-Z bar attachment on a low pulley. Cables keep the muscle under constant tension through the whole rep.",
+      "sourceMechanics": "Isolation",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/biceps/cable-curl/male/poster.png",
+          "mp4": "media/biceps/cable-curl/male/animation.mp4",
+          "webp": "media/biceps/cable-curl/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/biceps/cable-curl/female/poster.png",
+          "mp4": "media/biceps/cable-curl/female/animation.mp4",
+          "webp": "media/biceps/cable-curl/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "triceps-pushdown",
+      "name": "Triceps Pushdown",
+      "bodyPart": "triceps",
+      "type": "Strength",
+      "equipment": "Cable",
+      "mechanics": "Isolation",
+      "level": "Beginner",
+      "videoPath": "",
+      "description": "With elbows fixed at your sides, push the bar down until the arms fully extend, then return slowly. A reliable triceps finisher.",
+      "demonstrationVariant": "Standing; high cable, straight handle",
+      "sideDemonstrated": "Bilateral",
+      "illustrationSummary": "The elbows extend to move a high-pulley cable handle downward.",
+      "sourceDescription": "With elbows fixed at your sides, push the bar down until the arms fully extend, then return slowly. A reliable triceps finisher.",
+      "sourceMechanics": "Isolation",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/triceps/triceps-pushdown/male/poster.png",
+          "mp4": "media/triceps/triceps-pushdown/male/animation.mp4",
+          "webp": "media/triceps/triceps-pushdown/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/triceps/triceps-pushdown/female/poster.png",
+          "mp4": "media/triceps/triceps-pushdown/female/animation.mp4",
+          "webp": "media/triceps/triceps-pushdown/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "overhead-triceps-extension",
+      "name": "Overhead Triceps Extension",
+      "bodyPart": "triceps",
+      "type": "Strength",
+      "equipment": "Dumbbells",
+      "mechanics": "Isolation",
+      "level": "Beginner",
+      "videoPath": "",
+      "description": "Hold a dumbbell overhead with both hands and lower it behind your head, then extend back up. Stretches and works the long head.",
+      "demonstrationVariant": "Seated; one dumbbell held with two hands",
+      "sideDemonstrated": "Bilateral",
+      "illustrationSummary": "A single dumbbell moves from behind the head to overhead through elbow extension.",
+      "sourceDescription": "Hold a dumbbell overhead with both hands and lower it behind your head, then extend back up. Stretches and works the long head.",
+      "sourceMechanics": "Isolation",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/triceps/overhead-triceps-extension/male/poster.png",
+          "mp4": "media/triceps/overhead-triceps-extension/male/animation.mp4",
+          "webp": "media/triceps/overhead-triceps-extension/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/triceps/overhead-triceps-extension/female/poster.png",
+          "mp4": "media/triceps/overhead-triceps-extension/female/animation.mp4",
+          "webp": "media/triceps/overhead-triceps-extension/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "close-grip-bench-press",
+      "name": "Close-Grip Bench Press",
+      "bodyPart": "triceps",
+      "type": "Strength",
+      "equipment": "Barbell",
+      "mechanics": "Compound",
+      "level": "Intermediate",
+      "videoPath": "",
+      "description": "Bench press with a shoulder-width grip so the triceps drive the movement. Heavier way to overload the triceps.",
+      "demonstrationVariant": "Flat bench; shoulder-width barbell grip",
+      "sideDemonstrated": "Bilateral",
+      "illustrationSummary": "The barbell is pressed from the chest using a closer hand spacing than the standard bench-press illustration.",
+      "sourceDescription": "Bench press with a shoulder-width grip so the triceps drive the movement. Heavier way to overload the triceps.",
+      "sourceMechanics": "Compound",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/triceps/close-grip-bench-press/male/poster.png",
+          "mp4": "media/triceps/close-grip-bench-press/male/animation.mp4",
+          "webp": "media/triceps/close-grip-bench-press/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/triceps/close-grip-bench-press/female/poster.png",
+          "mp4": "media/triceps/close-grip-bench-press/female/animation.mp4",
+          "webp": "media/triceps/close-grip-bench-press/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "dips",
+      "name": "Dips",
+      "bodyPart": "triceps",
+      "type": "Strength",
+      "equipment": "Bodyweight",
+      "mechanics": "Compound",
+      "level": "Intermediate",
+      "videoPath": "",
+      "description": "Lower yourself between parallel bars until the shoulders pass the elbows, then push back up. Works the chest (leaning forward) and triceps (upright).",
+      "demonstrationVariant": "Parallel bars; bodyweight",
+      "sideDemonstrated": "Bilateral",
+      "illustrationSummary": "The suspended figure lowers and raises its torso between parallel bars.",
+      "sourceDescription": "Lower yourself between parallel bars until the shoulders pass the elbows, then push back up. Works the chest (leaning forward) and triceps (upright).",
+      "sourceMechanics": "Compound",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/triceps/dips/male/poster.png",
+          "mp4": "media/triceps/dips/male/animation.mp4",
+          "webp": "media/triceps/dips/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/triceps/dips/female/poster.png",
+          "mp4": "media/triceps/dips/female/animation.mp4",
+          "webp": "media/triceps/dips/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "skull-crusher",
+      "name": "Skull Crusher",
+      "bodyPart": "triceps",
+      "type": "Strength",
+      "equipment": "E-Z Bar",
+      "mechanics": "Isolation",
+      "level": "Intermediate",
+      "videoPath": "",
+      "description": "Lying down, lower the E-Z bar toward your forehead keeping the upper arms still, then extend back up. Use light weight and control.",
+      "demonstrationVariant": "Flat bench; EZ bar",
+      "sideDemonstrated": "Bilateral",
+      "illustrationSummary": "With the upper arms directed upward, elbow flexion brings the EZ bar toward the head and elbow extension moves it away.",
+      "sourceDescription": "Lying down, lower the E-Z bar toward your forehead keeping the upper arms still, then extend back up. Use light weight and control.",
+      "sourceMechanics": "Isolation",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/triceps/skull-crusher/male/poster.png",
+          "mp4": "media/triceps/skull-crusher/male/animation.mp4",
+          "webp": "media/triceps/skull-crusher/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/triceps/skull-crusher/female/poster.png",
+          "mp4": "media/triceps/skull-crusher/female/animation.mp4",
+          "webp": "media/triceps/skull-crusher/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "pull-up",
+      "name": "Pull-Up",
+      "bodyPart": "back",
+      "type": "Strength",
+      "equipment": "Bodyweight",
+      "mechanics": "Compound",
+      "level": "Intermediate",
+      "videoPath": "",
+      "description": "From a dead hang with an overhand grip, pull your chin over the bar and lower under control. The gold-standard upper back movement.",
+      "demonstrationVariant": "Fixed overhead bar",
+      "sideDemonstrated": "Bilateral",
+      "illustrationSummary": "The torso is drawn upward toward a fixed overhead bar, then lowered.",
+      "sourceDescription": "From a dead hang with an overhand grip, pull your chin over the bar and lower under control. The gold-standard upper back movement.",
+      "sourceMechanics": "Compound",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/back/pull-up/male/poster.png",
+          "mp4": "media/back/pull-up/male/animation.mp4",
+          "webp": "media/back/pull-up/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/back/pull-up/female/poster.png",
+          "mp4": "media/back/pull-up/female/animation.mp4",
+          "webp": "media/back/pull-up/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "lat-pulldown",
+      "name": "Lat Pulldown",
+      "bodyPart": "back",
+      "type": "Strength",
+      "equipment": "Cable",
+      "mechanics": "Compound",
+      "level": "Beginner",
+      "videoPath": "",
+      "description": "Pull the wide bar to your upper chest while keeping your torso tall and ribs down. Builds the lats and works well as a pull-up progression.",
+      "demonstrationVariant": "Seated; wide straight bar, front pulldown",
+      "sideDemonstrated": "Bilateral",
+      "illustrationSummary": "The cable bar is drawn from overhead toward the upper chest while the figure remains seated.",
+      "sourceDescription": "Pull the wide bar to your upper chest while keeping your torso tall and ribs down. Builds the lats and works well as a pull-up progression.",
+      "sourceMechanics": "Compound",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/back/lat-pulldown/male/poster.png",
+          "mp4": "media/back/lat-pulldown/male/animation.mp4",
+          "webp": "media/back/lat-pulldown/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/back/lat-pulldown/female/poster.png",
+          "mp4": "media/back/lat-pulldown/female/animation.mp4",
+          "webp": "media/back/lat-pulldown/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "barbell-row",
+      "name": "Barbell Row",
+      "bodyPart": "back",
+      "type": "Strength",
+      "equipment": "Barbell",
+      "mechanics": "Compound",
+      "level": "Intermediate",
+      "videoPath": "",
+      "description": "Hinge forward with a flat back and row the bar to your lower ribs, squeezing the shoulder blades. Thickens the mid-back and lats.",
+      "demonstrationVariant": "Hip hinge; barbell",
+      "sideDemonstrated": "Bilateral",
+      "illustrationSummary": "The barbell is drawn toward the lower ribs and lowered while the hip-hinged torso stays stable.",
+      "sourceDescription": "Hinge forward with a flat back and row the bar to your lower ribs, squeezing the shoulder blades. Thickens the mid-back and lats.",
+      "sourceMechanics": "Compound",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/back/barbell-row/male/poster.png",
+          "mp4": "media/back/barbell-row/male/animation.mp4",
+          "webp": "media/back/barbell-row/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/back/barbell-row/female/poster.png",
+          "mp4": "media/back/barbell-row/female/animation.mp4",
+          "webp": "media/back/barbell-row/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "seated-cable-row",
+      "name": "Seated Cable Row",
+      "bodyPart": "back",
+      "type": "Strength",
+      "equipment": "Cable",
+      "mechanics": "Compound",
+      "level": "Beginner",
+      "videoPath": "",
+      "description": "Pull the handle to your stomach while keeping the chest proud and elbows tracking to the hips. Trains the whole back with stable form.",
+      "demonstrationVariant": "Seated; low cable, close handle",
+      "sideDemonstrated": "Bilateral",
+      "illustrationSummary": "A cable handle moves toward the torso while the feet are supported ahead of the seat.",
+      "sourceDescription": "Pull the handle to your stomach while keeping the chest proud and elbows tracking to the hips. Trains the whole back with stable form.",
+      "sourceMechanics": "Compound",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/back/seated-cable-row/male/poster.png",
+          "mp4": "media/back/seated-cable-row/male/animation.mp4",
+          "webp": "media/back/seated-cable-row/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/back/seated-cable-row/female/poster.png",
+          "mp4": "media/back/seated-cable-row/female/animation.mp4",
+          "webp": "media/back/seated-cable-row/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "deadlift",
+      "name": "Deadlift",
+      "bodyPart": "back",
+      "type": "Strength",
+      "equipment": "Barbell",
+      "mechanics": "Compound",
+      "level": "Advanced",
+      "videoPath": "",
+      "description": "Set the bar over mid-foot, brace, and stand up while keeping the bar close to your legs. Full-body posterior chain strength builder.",
+      "demonstrationVariant": "Conventional stance; barbell",
+      "sideDemonstrated": "Bilateral",
+      "illustrationSummary": "Hip and knee extension raise the barbell from near the floor; the arms remain nearly straight.",
+      "sourceDescription": "Set the bar over mid-foot, brace, and stand up while keeping the bar close to your legs. Full-body posterior chain strength builder.",
+      "sourceMechanics": "Compound",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/back/deadlift/male/poster.png",
+          "mp4": "media/back/deadlift/male/animation.mp4",
+          "webp": "media/back/deadlift/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/back/deadlift/female/poster.png",
+          "mp4": "media/back/deadlift/female/animation.mp4",
+          "webp": "media/back/deadlift/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "single-arm-dumbbell-row",
+      "name": "Single-Arm Dumbbell Row",
+      "bodyPart": "back",
+      "type": "Strength",
+      "equipment": "Dumbbells",
+      "mechanics": "Compound",
+      "level": "Beginner",
+      "videoPath": "",
+      "description": "Brace one hand and knee on a bench and row the dumbbell to your hip. Allows a big stretch and contraction in each side of the back.",
+      "demonstrationVariant": "One hand and knee supported by a bench",
+      "sideDemonstrated": "Right arm shown",
+      "illustrationSummary": "The right arm rows a dumbbell; the left palm, knee and lower leg are supported on the bench.",
+      "sourceDescription": "Brace one hand and knee on a bench and row the dumbbell to your hip. Allows a big stretch and contraction in each side of the back.",
+      "sourceMechanics": "Isolation",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/back/single-arm-dumbbell-row/male/poster.png",
+          "mp4": "media/back/single-arm-dumbbell-row/male/animation.mp4",
+          "webp": "media/back/single-arm-dumbbell-row/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/back/single-arm-dumbbell-row/female/poster.png",
+          "mp4": "media/back/single-arm-dumbbell-row/female/animation.mp4",
+          "webp": "media/back/single-arm-dumbbell-row/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "back-squat",
+      "name": "Back Squat",
+      "bodyPart": "quads",
+      "type": "Strength",
+      "equipment": "Barbell",
+      "mechanics": "Compound",
+      "level": "Intermediate",
+      "videoPath": "",
+      "description": "With the bar on your upper back, sit down between your heels to at least parallel and stand back up. The foundation of leg training.",
+      "demonstrationVariant": "Barbell supported across upper back",
+      "sideDemonstrated": "Bilateral",
+      "illustrationSummary": "The hips and knees bend into a squat and extend while the barbell stays across the upper back.",
+      "sourceDescription": "With the bar on your upper back, sit down between your heels to at least parallel and stand back up. The foundation of leg training.",
+      "sourceMechanics": "Compound",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/quads/back-squat/male/poster.png",
+          "mp4": "media/quads/back-squat/male/animation.mp4",
+          "webp": "media/quads/back-squat/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/quads/back-squat/female/poster.png",
+          "mp4": "media/quads/back-squat/female/animation.mp4",
+          "webp": "media/quads/back-squat/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "front-squat",
+      "name": "Front Squat",
+      "bodyPart": "quads",
+      "type": "Strength",
+      "equipment": "Barbell",
+      "mechanics": "Compound",
+      "level": "Advanced",
+      "videoPath": "",
+      "description": "Hold the bar on the front of your shoulders with elbows high and squat down. Emphasizes the quads and forces an upright torso.",
+      "demonstrationVariant": "Front-rack barbell",
+      "sideDemonstrated": "Bilateral",
+      "illustrationSummary": "The figure squats with a barbell positioned in front of the shoulders.",
+      "sourceDescription": "Hold the bar on the front of your shoulders with elbows high and squat down. Emphasizes the quads and forces an upright torso.",
+      "sourceMechanics": "Compound",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/quads/front-squat/male/poster.png",
+          "mp4": "media/quads/front-squat/male/animation.mp4",
+          "webp": "media/quads/front-squat/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/quads/front-squat/female/poster.png",
+          "mp4": "media/quads/front-squat/female/animation.mp4",
+          "webp": "media/quads/front-squat/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "barbell-lunge",
+      "name": "Barbell Lunge",
+      "bodyPart": "quads",
+      "type": "Strength",
+      "equipment": "Barbell",
+      "mechanics": "Compound",
+      "level": "Intermediate",
+      "videoPath": "",
+      "description": "Step forward and lower until the rear knee approaches the floor, then drive back up. Works quads, glutes and balance side to side.",
+      "demonstrationVariant": "Forward step; barbell across upper back",
+      "sideDemonstrated": "Left leg leads",
+      "illustrationSummary": "One foot steps forward, the body lowers into a lunge, then returns to the starting position.",
+      "sourceDescription": "Step forward and lower until the rear knee approaches the floor, then drive back up. Works quads, glutes and balance side to side.",
+      "sourceMechanics": "Compound",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/quads/barbell-lunge/male/poster.png",
+          "mp4": "media/quads/barbell-lunge/male/animation.mp4",
+          "webp": "media/quads/barbell-lunge/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/quads/barbell-lunge/female/poster.png",
+          "mp4": "media/quads/barbell-lunge/female/animation.mp4",
+          "webp": "media/quads/barbell-lunge/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "leg-extension",
+      "name": "Leg Extension",
+      "bodyPart": "quads",
+      "type": "Strength",
+      "equipment": "Machine",
+      "mechanics": "Isolation",
+      "level": "Beginner",
+      "videoPath": "",
+      "description": "Extend the knees against the resistance of the machine, then lower slowly. Directly isolates the quadriceps.",
+      "demonstrationVariant": "Seated; knee-extension machine schematic",
+      "sideDemonstrated": "Bilateral",
+      "illustrationSummary": "The lower legs rotate upward about the knees against a padded machine roller.",
+      "sourceDescription": "Extend the knees against the resistance of the machine, then lower slowly. Directly isolates the quadriceps.",
+      "sourceMechanics": "Isolation",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/quads/leg-extension/male/poster.png",
+          "mp4": "media/quads/leg-extension/male/animation.mp4",
+          "webp": "media/quads/leg-extension/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/quads/leg-extension/female/poster.png",
+          "mp4": "media/quads/leg-extension/female/animation.mp4",
+          "webp": "media/quads/leg-extension/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "goblet-squat",
+      "name": "Goblet Squat",
+      "bodyPart": "quads",
+      "type": "Strength",
+      "equipment": "Dumbbells",
+      "mechanics": "Compound",
+      "level": "Beginner",
+      "videoPath": "",
+      "description": "Hold one dumbbell at your chest and squat, elbows inside the knees. A great entry-level squat that teaches an upright, tall spine.",
+      "demonstrationVariant": "One dumbbell at chest; not a kettlebell",
+      "sideDemonstrated": "Bilateral",
+      "illustrationSummary": "The figure squats while holding one vertical dumbbell in front of the chest.",
+      "sourceDescription": "Hold one dumbbell at your chest and squat, elbows inside the knees. A great entry-level squat that teaches an upright, tall spine.",
+      "sourceMechanics": "Compound",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/quads/goblet-squat/male/poster.png",
+          "mp4": "media/quads/goblet-squat/male/animation.mp4",
+          "webp": "media/quads/goblet-squat/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/quads/goblet-squat/female/poster.png",
+          "mp4": "media/quads/goblet-squat/female/animation.mp4",
+          "webp": "media/quads/goblet-squat/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "romanian-deadlift",
+      "name": "Romanian Deadlift",
+      "bodyPart": "hamstrings",
+      "type": "Strength",
+      "equipment": "Barbell",
+      "mechanics": "Compound",
+      "level": "Intermediate",
+      "videoPath": "",
+      "description": "With soft knees, push the hips back to feel a deep hamstring stretch while lowering the bar down the legs, then stand tall. Hamstring and glute builder.",
+      "demonstrationVariant": "Standing-start hip hinge; barbell",
+      "sideDemonstrated": "Bilateral",
+      "illustrationSummary": "The hips move backward as the barbell lowers along the legs; the arms remain nearly straight.",
+      "sourceDescription": "With soft knees, push the hips back to feel a deep hamstring stretch while lowering the bar down the legs, then stand tall. Hamstring and glute builder.",
+      "sourceMechanics": "Compound",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/hamstrings/romanian-deadlift/male/poster.png",
+          "mp4": "media/hamstrings/romanian-deadlift/male/animation.mp4",
+          "webp": "media/hamstrings/romanian-deadlift/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/hamstrings/romanian-deadlift/female/poster.png",
+          "mp4": "media/hamstrings/romanian-deadlift/female/animation.mp4",
+          "webp": "media/hamstrings/romanian-deadlift/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "leg-curl",
+      "name": "Leg Curl",
+      "bodyPart": "hamstrings",
+      "type": "Strength",
+      "equipment": "Machine",
+      "mechanics": "Isolation",
+      "level": "Beginner",
+      "videoPath": "",
+      "description": "Curl the legs against the machine's resistance, bringing the heels toward the glutes. Finishes the hamstrings after heavy pulls.",
+      "demonstrationVariant": "Prone; lying leg-curl machine schematic",
+      "sideDemonstrated": "Bilateral",
+      "illustrationSummary": "The knees bend to raise a padded roller behind the legs while the torso is supported on a bench.",
+      "sourceDescription": "Curl the legs against the machine's resistance, bringing the heels toward the glutes. Finishes the hamstrings after heavy pulls.",
+      "sourceMechanics": "Isolation",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/hamstrings/leg-curl/male/poster.png",
+          "mp4": "media/hamstrings/leg-curl/male/animation.mp4",
+          "webp": "media/hamstrings/leg-curl/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/hamstrings/leg-curl/female/poster.png",
+          "mp4": "media/hamstrings/leg-curl/female/animation.mp4",
+          "webp": "media/hamstrings/leg-curl/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "nordic-curl",
+      "name": "Nordic Curl",
+      "bodyPart": "hamstrings",
+      "type": "Strength",
+      "equipment": "Bodyweight",
+      "mechanics": "Isolation",
+      "level": "Advanced",
+      "videoPath": "",
+      "description": "Anchor your feet and lower your torso under control against the hamstrings, catching yourself with your hands. Maximal hamstring loading.",
+      "demonstrationVariant": "Kneeling; ankles secured",
+      "sideDemonstrated": "Bilateral",
+      "illustrationSummary": "The body tilts forward about the knees with the hips extended and the ankles restrained, then returns.",
+      "sourceDescription": "Anchor your feet and lower your torso under control against the hamstrings, catching yourself with your hands. Maximal hamstring loading.",
+      "sourceMechanics": "Isolation",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/hamstrings/nordic-curl/male/poster.png",
+          "mp4": "media/hamstrings/nordic-curl/male/animation.mp4",
+          "webp": "media/hamstrings/nordic-curl/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/hamstrings/nordic-curl/female/poster.png",
+          "mp4": "media/hamstrings/nordic-curl/female/animation.mp4",
+          "webp": "media/hamstrings/nordic-curl/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "sumo-deadlift",
+      "name": "Sumo Deadlift",
+      "bodyPart": "hamstrings",
+      "type": "Strength",
+      "equipment": "Barbell",
+      "mechanics": "Compound",
+      "level": "Advanced",
+      "videoPath": "",
+      "description": "A wide-stance deadlift with toes turned out and arms hanging inside the knees. Shifts more load to the quads, adductors and hips.",
+      "demonstrationVariant": "Wide stance; barbell inside legs",
+      "sideDemonstrated": "Bilateral",
+      "illustrationSummary": "A wide-stance barbell lift is illustrated with the hands positioned inside the knees.",
+      "sourceDescription": "A wide-stance deadlift with toes turned out and arms hanging inside the knees. Shifts more load to the quads, adductors and hips.",
+      "sourceMechanics": "Compound",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/hamstrings/sumo-deadlift/male/poster.png",
+          "mp4": "media/hamstrings/sumo-deadlift/male/animation.mp4",
+          "webp": "media/hamstrings/sumo-deadlift/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/hamstrings/sumo-deadlift/female/poster.png",
+          "mp4": "media/hamstrings/sumo-deadlift/female/animation.mp4",
+          "webp": "media/hamstrings/sumo-deadlift/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "plank",
+      "name": "Plank",
+      "bodyPart": "abs",
+      "type": "Strength",
+      "equipment": "Bodyweight",
+      "mechanics": "Isolation",
+      "level": "Beginner",
+      "videoPath": "",
+      "description": "Hold a straight-body position on forearms and toes, bracing the core and glutes. Builds endurance in the whole abdominal wall.",
+      "demonstrationVariant": "Forearm-supported static hold",
+      "sideDemonstrated": "Bilateral",
+      "illustrationSummary": "A still rendering shows a forearm-supported plank. There is no artificial repetition loop.",
+      "sourceDescription": "Hold a straight-body position on forearms and toes, bracing the core and glutes. Builds endurance in the whole abdominal wall.",
+      "sourceMechanics": "Isolation",
+      "media": {
+        "male": {
+          "kind": "hold",
+          "poster": "media/abs/plank/male/poster.png",
+          "mp4": null,
+          "webp": null,
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 0,
+          "frameCount": 1,
+          "durationSeconds": null,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "hold",
+          "poster": "media/abs/plank/female/poster.png",
+          "mp4": null,
+          "webp": null,
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 0,
+          "frameCount": 1,
+          "durationSeconds": null,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "crunch",
+      "name": "Crunch",
+      "bodyPart": "abs",
+      "type": "Strength",
+      "equipment": "Bodyweight",
+      "mechanics": "Isolation",
+      "level": "Beginner",
+      "videoPath": "",
+      "description": "Lying down, curl the shoulders toward the hips using the abs while keeping the lower back down. Isolates the upper rectus abdominis.",
+      "demonstrationVariant": "Floor; short-range trunk lift",
+      "sideDemonstrated": "Bilateral",
+      "illustrationSummary": "A short trunk lift is illustrated with the feet supported on the floor. The simplified torso does not model individual vertebrae.",
+      "sourceDescription": "Lying down, curl the shoulders toward the hips using the abs while keeping the lower back down. Isolates the upper rectus abdominis.",
+      "sourceMechanics": "Isolation",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/abs/crunch/male/poster.png",
+          "mp4": "media/abs/crunch/male/animation.mp4",
+          "webp": "media/abs/crunch/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/abs/crunch/female/poster.png",
+          "mp4": "media/abs/crunch/female/animation.mp4",
+          "webp": "media/abs/crunch/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "hanging-leg-raise",
+      "name": "Hanging Leg Raise",
+      "bodyPart": "abs",
+      "type": "Strength",
+      "equipment": "Bodyweight",
+      "mechanics": "Compound",
+      "level": "Intermediate",
+      "videoPath": "",
+      "description": "Hang from a bar and raise the legs with control, curling the hips upward. Hits the lower abs and hip flexors with full tension.",
+      "demonstrationVariant": "Fixed overhead bar; near-straight legs",
+      "sideDemonstrated": "Bilateral",
+      "illustrationSummary": "The legs lift forward while the upper body remains suspended from an overhead bar.",
+      "sourceDescription": "Hang from a bar and raise the legs with control, curling the hips upward. Hits the lower abs and hip flexors with full tension.",
+      "sourceMechanics": "Compound",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/abs/hanging-leg-raise/male/poster.png",
+          "mp4": "media/abs/hanging-leg-raise/male/animation.mp4",
+          "webp": "media/abs/hanging-leg-raise/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/abs/hanging-leg-raise/female/poster.png",
+          "mp4": "media/abs/hanging-leg-raise/female/animation.mp4",
+          "webp": "media/abs/hanging-leg-raise/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "russian-twist",
+      "name": "Russian Twist",
+      "bodyPart": "abs",
+      "type": "Strength",
+      "equipment": "Bodyweight",
+      "mechanics": "Isolation",
+      "level": "Beginner",
+      "videoPath": "",
+      "description": "Sitting with a soft lean back, rotate the torso side to side. Trains the obliques; hold a weight to increase the load.",
+      "demonstrationVariant": "Seated; feet supported; no added weight",
+      "sideDemonstrated": "Alternating left/right",
+      "illustrationSummary": "The upper torso and joined hands rotate from side to side while the lower-body support remains in place.",
+      "sourceDescription": "Sitting with a soft lean back, rotate the torso side to side. Trains the obliques; hold a weight to increase the load.",
+      "sourceMechanics": "Isolation",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/abs/russian-twist/male/poster.png",
+          "mp4": "media/abs/russian-twist/male/animation.mp4",
+          "webp": "media/abs/russian-twist/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/abs/russian-twist/female/poster.png",
+          "mp4": "media/abs/russian-twist/female/animation.mp4",
+          "webp": "media/abs/russian-twist/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "cable-crunch",
+      "name": "Cable Crunch",
+      "bodyPart": "abs",
+      "type": "Strength",
+      "equipment": "Cable",
+      "mechanics": "Isolation",
+      "level": "Beginner",
+      "videoPath": "",
+      "description": "Kneel under a high pulley with a rope at the head and curl the torso down. Lets you add load to the crunch safely.",
+      "demonstrationVariant": "Kneeling; high rope cable",
+      "sideDemonstrated": "Bilateral",
+      "illustrationSummary": "A kneeling trunk-flexion pattern is illustrated with a high cable rope. The simplified torso does not model individual vertebrae.",
+      "sourceDescription": "Kneel under a high pulley with a rope at the head and curl the torso down. Lets you add load to the crunch safely.",
+      "sourceMechanics": "Isolation",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/abs/cable-crunch/male/poster.png",
+          "mp4": "media/abs/cable-crunch/male/animation.mp4",
+          "webp": "media/abs/cable-crunch/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/abs/cable-crunch/female/poster.png",
+          "mp4": "media/abs/cable-crunch/female/animation.mp4",
+          "webp": "media/abs/cable-crunch/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "hip-thrust",
+      "name": "Hip Thrust",
+      "bodyPart": "glutes",
+      "type": "Strength",
+      "equipment": "Barbell",
+      "mechanics": "Compound",
+      "level": "Intermediate",
+      "videoPath": "",
+      "description": "With the bar over your hips and shoulders on a bench, drive through the heels to full hip extension, squeezing the glutes at the top.",
+      "demonstrationVariant": "Upper back supported by bench; barbell at hips",
+      "sideDemonstrated": "Bilateral",
+      "illustrationSummary": "The hips rise and lower with the upper back supported by a bench and a barbell positioned at the pelvis.",
+      "sourceDescription": "With the bar over your hips and shoulders on a bench, drive through the heels to full hip extension, squeezing the glutes at the top.",
+      "sourceMechanics": "Compound",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/glutes/hip-thrust/male/poster.png",
+          "mp4": "media/glutes/hip-thrust/male/animation.mp4",
+          "webp": "media/glutes/hip-thrust/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/glutes/hip-thrust/female/poster.png",
+          "mp4": "media/glutes/hip-thrust/female/animation.mp4",
+          "webp": "media/glutes/hip-thrust/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "glute-bridge",
+      "name": "Glute Bridge",
+      "bodyPart": "glutes",
+      "type": "Strength",
+      "equipment": "Bodyweight",
+      "mechanics": "Compound",
+      "level": "Beginner",
+      "videoPath": "",
+      "description": "Lying down with knees bent, lift the hips until the body forms a straight line from knees to shoulders. A simple glute activator.",
+      "demonstrationVariant": "Floor; bodyweight",
+      "sideDemonstrated": "Bilateral",
+      "illustrationSummary": "The hips rise from the floor while the upper back and feet remain supported.",
+      "sourceDescription": "Lying down with knees bent, lift the hips until the body forms a straight line from knees to shoulders. A simple glute activator.",
+      "sourceMechanics": "Compound",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/glutes/glute-bridge/male/poster.png",
+          "mp4": "media/glutes/glute-bridge/male/animation.mp4",
+          "webp": "media/glutes/glute-bridge/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/glutes/glute-bridge/female/poster.png",
+          "mp4": "media/glutes/glute-bridge/female/animation.mp4",
+          "webp": "media/glutes/glute-bridge/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    },
+    {
+      "id": "cable-kickback",
+      "name": "Cable Kickback",
+      "bodyPart": "glutes",
+      "type": "Strength",
+      "equipment": "Cable",
+      "mechanics": "Isolation",
+      "level": "Beginner",
+      "videoPath": "",
+      "description": "With an ankle strap on a low pulley, extend the leg back and squeeze the glute at the peak of the movement.",
+      "demonstrationVariant": "Standing support; low cable ankle attachment",
+      "sideDemonstrated": "Right leg shown",
+      "illustrationSummary": "The right leg extends backward with a low cable attached near the ankle while the other leg supports the body.",
+      "sourceDescription": "With an ankle strap on a low pulley, extend the leg back and squeeze the glute at the peak of the movement.",
+      "sourceMechanics": "Isolation",
+      "media": {
+        "male": {
+          "kind": "animation",
+          "poster": "media/glutes/cable-kickback/male/poster.png",
+          "mp4": "media/glutes/cable-kickback/male/animation.mp4",
+          "webp": "media/glutes/cable-kickback/male/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        },
+        "female": {
+          "kind": "animation",
+          "poster": "media/glutes/cable-kickback/female/poster.png",
+          "mp4": "media/glutes/cable-kickback/female/animation.mp4",
+          "webp": "media/glutes/cable-kickback/female/animation.webp",
+          "resolution": [
+            768,
+            768
+          ],
+          "fps": 24,
+          "frameCount": 72,
+          "durationSeconds": 3.0,
+          "professionalTechniqueReview": false
+        }
+      }
+    }
+  ]
+}

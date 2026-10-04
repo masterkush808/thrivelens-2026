@@ -8,6 +8,12 @@ if (!config.resolver.assetExts.includes("bin")) {
   config.resolver.assetExts.push("bin");
 }
 
+// expo-sqlite's web build imports wa-sqlite.wasm as a module; Metro must be
+// told it is an asset or the web bundle fails to resolve.
+if (!config.resolver.assetExts.includes("wasm")) {
+  config.resolver.assetExts.push("wasm");
+}
+
 // @tensorflow/tfjs-react-native statically imports react-native-fs for its
 // release-only loadLocalAsset() path. Expo's managed workflow never uses that
 // path (bundled model weights load over HTTP), so alias it to a no-op stub to

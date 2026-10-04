@@ -39,6 +39,9 @@ export function InspirationCard({ compact = false, showNext = true, style }: Ins
       <Text style={[styles.message, compact && styles.compactMessage]}>
         {ready ? message.message : 'Making space for your next small step…'}
       </Text>
+      {ready && message.attribution ? (
+        <Text style={styles.attribution}>{message.attribution}</Text>
+      ) : null}
       </Animated.View>
       <View style={styles.footer}>
         <Text style={styles.category}>{ready ? CATEGORY_LABELS[message.category] : 'Your daily perspective'}</Text>
@@ -84,6 +87,13 @@ const styles = StyleSheet.create({
   compactTitle: { fontSize: 25, lineHeight: 32 },
   message: { color: '#C7BFAF', fontSize: 16, lineHeight: 25 },
   compactMessage: { fontSize: 15, lineHeight: 23 },
+  attribution: {
+    color: '#8E846F',
+    fontSize: 12,
+    lineHeight: 18,
+    fontStyle: 'italic',
+    marginTop: 12,
+  },
   footer: { flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'space-between', gap: 4, marginTop: 16 },
   category: { color: '#C7BFAF', fontSize: 12, lineHeight: 18, marginRight: 8 },
   nextButton: { minHeight: 44, flexDirection: 'row', alignItems: 'center', gap: 8, paddingVertical: 10, paddingHorizontal: 8, borderRadius: 10 },
