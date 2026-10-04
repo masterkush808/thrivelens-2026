@@ -197,11 +197,19 @@ export interface SessionDetail {
   exercises: SessionExerciseRow[];
 }
 
-export async function getRecentSessionDetails(limit: number = 5): Promise<SessionDetail[]> {
+export async function getRecentSessionDetails(
+  limit: number = 5,
+  sinceMs?: number,
+): Promise<SessionDetail[]> {
   const userId = await currentUserId();
   const uid = userId ?? undefined;
   const [sessions, catalog] = await Promise.all([
-    recentWorkoutSessions(limit, uid),
+    // When a window is supplied, only sessions inside it are listed. Without
+    // this the "Recent Workouts" card ignored the active period filter and
+    // showed arbitrarily old sessions under a "last 7D" heading.
+    sinceMs === undefined
+      ? recentWorkoutSessions(limit, uid)
+      : workoutSessionsSince(sinceMs, limit, uid),
     allExercises(),
   ]);
   const names = new Map(catalog.map((exercise) => [exercise.id, exercise.name]));

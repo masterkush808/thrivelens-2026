@@ -1,10 +1,16 @@
 import * as Crypto from "expo-crypto";
 import * as FileSystem from "expo-file-system/legacy";
 
+// SECURITY: every EXPO_PUBLIC_* value below is inlined into the public web
+// bundle and is readable by anyone who opens the deployed app. Only
+// bundle-visible values (URLs, public identifiers) may ever appear here.
+//
+// The HuggingFace token is an account credential and is NEVER read by the
+// client. It is stored as a server-side secret on the HF Space (see
+// serving/DEPLOY_HF_SPACE.md), which authenticates to the Hub on our behalf.
+// Anonymous Space access from the app works via the visitor quota.
 const BASE_URL = process.env.EXPO_PUBLIC_INFERENCE_URL;
-const API_TOKEN = process.env.EXPO_PUBLIC_INFERENCE_TOKEN;
 const ZEROGPU_URL = process.env.EXPO_PUBLIC_ZEROGPU_URL;
-const HF_TOKEN = process.env.EXPO_PUBLIC_HF_TOKEN;
 
 export type InferenceSource = "cloud" | "zerogpu" | "local";
 
@@ -564,9 +570,6 @@ async function request<T>(
     Accept: "application/json",
     ...(init.headers as Record<string, string> | undefined),
   };
-  if (API_TOKEN) {
-    headers["X-API-Key"] = API_TOKEN;
-  }
   try {
     const response = await Promise.race([
       fetch(`${BASE_URL}${path}`, {
@@ -638,9 +641,6 @@ export async function analyzeImage(uri: string, requestId?: string): Promise<Ana
   const rid = requestId ?? makeRequestId();
   try {
     const headers: Record<string, string> = { Accept: "application/json" };
-    if (API_TOKEN) {
-      headers["X-API-Key"] = API_TOKEN;
-    }
     const result = await nativeUpload(
       `${BASE_URL}/v1/food/analyze`,
       uri,
@@ -815,7 +815,6 @@ async function gradioUpload(uri: string): Promise<string> {
         uploadType: FileSystem.FileSystemUploadType.MULTIPART,
         fieldName: "files",
         mimeType: "image/jpeg",
-        headers: HF_TOKEN ? { Authorization: `Bearer ${HF_TOKEN}` } : undefined,
       },
       45000,
       "Couldn't complete the upload in time. Please try again.",
@@ -859,9 +858,6 @@ async function gradioAnalyze(filePath: string): Promise<ZeroGPUAnalyzeResult> {
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
   };
-  if (HF_TOKEN) {
-    headers.Authorization = `Bearer ${HF_TOKEN}`;
-  }
   try {
     const response = await fetch(`${ZEROGPU_URL}/gradio_api/call/analyze`, {
       method: "POST",
@@ -905,9 +901,6 @@ async function gradioRun(apiName: string, payload: unknown, timeoutMs: number): 
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
   };
-  if (HF_TOKEN) {
-    headers.Authorization = `Bearer ${HF_TOKEN}`;
-  }
   try {
     const response = await fetch(`${ZEROGPU_URL}/gradio_api/call/${apiName}`, {
       method: "POST",
@@ -951,9 +944,6 @@ async function gradioPollEvent(
   const deadline = Date.now() + budgetMs;
   while (Date.now() < deadline) {
     const headers: Record<string, string> = { Accept: "text/event-stream" };
-    if (HF_TOKEN) {
-      headers.Authorization = `Bearer ${HF_TOKEN}`;
-    }
     const remaining = deadline - Date.now();
     if (remaining <= 0) {
       break;

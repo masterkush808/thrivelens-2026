@@ -30,8 +30,11 @@ yarn-error.*
 .DS_Store
 *.pem
 
-# local env files
-.env*.local
+# local env files - never commit real env files (they hold credentials).
+# .env.example is intentionally NOT ignored so the template stays tracked.
+.env
+.env.*
+!.env.example
 
 # typescript
 *.tsbuildinfo

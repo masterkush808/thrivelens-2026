@@ -74,6 +74,10 @@
     "serve:mock": "pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/serve-mock.ps1",
     "lint": "expo lint",
     "typecheck": "tsc --noEmit",
+    "test": "node --test --experimental-strip-types \"tests/*.test.mts\"",
+    "verify:secrets": "node scripts/check-bundle-secrets.mjs dist",
+    "build:web": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\" && expo export --platform web --output-dir dist --clear",
+    "deploy:web": "npm run build:web && npm run verify:secrets && npx eas-cli deploy --prod",
     "db:generate": "drizzle-kit generate",
     "db:push": "drizzle-kit push"
   },

@@ -4,12 +4,13 @@ import { View, ScrollView, Pressable, TextInput, Alert, RefreshControl } from "r
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Text, Card, Button } from "@/components/ui";
 import { StrengthSection } from "@/components/strength/StrengthSection";
-import { getTodayFoodSummary, getTodayFoodLogs } from "@/data/foodRepository";
+import { getTodayFoodSummary, getTodayFoodLogs, getFoodLogsSince } from "@/data/foodRepository";
 import { getCurrentProfile } from "@/data/profileRepository";
 import { getWeightTrend, logWeight } from "@/data/progressRepository";
 import { FoodLog, ProgressLog } from "@/db";
+import { TIME_FILTERS, daysForRange, rangeStartMs } from "@/lib/timeRanges";
 
-const timeFilters = ["7D", "30D", "3M", "6M"];
+const timeFilters = TIME_FILTERS;
 
 function dayKey(epochMs: number): string {
   const d = new Date(epochMs);
@@ -45,41 +46,64 @@ export default function TrackingScreen() {
   const [refreshing, setRefreshing] = useState(false);
   const [reloadToken, setReloadToken] = useState(0);
 
-  const loadOverview = useCallback(async () => {
-    const [summary, logs, currentProfile, trend] = await Promise.all([
+  // Fetch and apply are split so the mount effect can guard against applying
+  // results after unmount, which the previous combined function could not do.
+  const fetchOverview = useCallback(async () => {
+    const [summary, todayLogs, windowLogs, currentProfile, trend] = await Promise.all([
       getTodayFoodSummary(),
       getTodayFoodLogs(),
+      getFoodLogsSince(rangeStartMs(selectedTime)),
       getCurrentProfile().catch(() => null),
       getWeightTrend(20).catch(() => []),
     ]);
-    setToday(summary);
-    setRecentLogs(logs);
-    setTodayCount(logs.length);
-    setWeightTrend(trend);
+    return { summary, todayCount: todayLogs.length, windowLogs, trend, currentProfile };
+  }, [selectedTime]);
+
+  const applyOverview = useCallback((data: Awaited<ReturnType<typeof fetchOverview>>) => {
+    setToday(data.summary);
+    setRecentLogs(data.windowLogs);
+    setTodayCount(data.todayCount);
+    setWeightTrend(data.trend);
     setProfile({
-      weight: currentProfile?.weight ?? null,
-      height: currentProfile?.height ?? null,
-      age: currentProfile?.age ?? null,
-      goal: currentProfile?.goal ?? null,
-      calorie_target: currentProfile?.calorie_target ?? null,
-      protein_target: currentProfile?.protein_target ?? null,
+      weight: data.currentProfile?.weight ?? null,
+      height: data.currentProfile?.height ?? null,
+      age: data.currentProfile?.age ?? null,
+      goal: data.currentProfile?.goal ?? null,
+      calorie_target: data.currentProfile?.calorie_target ?? null,
+      protein_target: data.currentProfile?.protein_target ?? null,
     });
   }, []);
 
+  const loadOverview = useCallback(async () => {
+    applyOverview(await fetchOverview());
+  }, [applyOverview, fetchOverview]);
+
   useEffect(() => {
+    let alive = true;
     (async () => {
       try {
-        await loadOverview();
-      } catch {}
+        const data = await fetchOverview();
+        if (alive) applyOverview(data);
+      } catch (error) {
+        console.warn("[thrivelens] tracking overview failed:", error);
+      }
     })();
-  }, [loadOverview, reloadToken]);
+    return () => {
+      alive = false;
+    };
+  }, [applyOverview, fetchOverview]);
 
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
     try {
+      // Single fetch. This previously called loadOverview() and then bumped
+      // reloadToken, whose effect called loadOverview() again - two overlapping
+      // loads per pull, able to resolve out of order.
       await loadOverview();
+      // Strength cards live in a child with its own effects; drive them here.
       setReloadToken((token) => token + 1);
-    } catch {
+    } catch (error) {
+      console.warn("[thrivelens] tracking refresh failed:", error);
     } finally {
       setRefreshing(false);
     }
@@ -87,8 +111,8 @@ export default function TrackingScreen() {
 
   const days = useMemo(() => {
     const now = new Date();
-    const filterDays = selectedTime === "7D" ? 7 : selectedTime === "30D" ? 30 : 90;
-    const start = new Date(now.getFullYear(), now.getMonth(), now.getDate() - (filterDays - 1)).getTime();
+    const filterDays = daysForRange(selectedTime);
+    const start = rangeStartMs(selectedTime, now);
     const byDay = new Map<string, number>();
     const rows: { day: string; calories: number }[] = [];
 
@@ -411,7 +435,7 @@ export default function TrackingScreen() {
           </View>
 
           <View className="px-6 mb-6">
-            <StrengthSection rangeLabel={selectedTime} />
+            <StrengthSection rangeLabel={selectedTime} refreshToken={reloadToken} />
           </View>
         </ScrollView>
       </SafeAreaView>

@@ -17,6 +17,7 @@ import {
   formatVolume,
   percentChange,
 } from "@/data/workoutMetrics";
+import { daysForRange, rangeStartMs } from "@/lib/timeRanges";
 
 function shortDate(iso: string): string {
   const d = new Date(iso);
@@ -270,7 +271,14 @@ function SessionCard({
   );
 }
 
-export function StrengthSection({ rangeLabel }: { rangeLabel: string }) {
+export function StrengthSection({
+  rangeLabel,
+  refreshToken = 0,
+}: {
+  rangeLabel: string;
+  /** Bump to force a full refetch of every card in this section. */
+  refreshToken?: number;
+}) {
   const [summary, setSummary] = useState<StrengthSummary | null>(null);
   const [sessions, setSessions] = useState<SessionDetail[]>([]);
   const [options, setOptions] = useState<{ id: string; name: string }[]>([]);
@@ -283,16 +291,17 @@ export function StrengthSection({ rangeLabel }: { rangeLabel: string }) {
   const [refreshing, setRefreshing] = useState(false);
   const [loaded, setLoaded] = useState(false);
 
-  const rangeMs = rangeLabel === "7D" ? 7 : rangeLabel === "30D" ? 30 : 90;
+  const rangeDays = daysForRange(rangeLabel);
+  const rangeStart = rangeStartMs(rangeLabel);
+  const [loadError, setLoadError] = useState(false);
+  const [dataToken, setDataToken] = useState(0);
 
   const load = useCallback(async () => {
-    const since = new Date();
-    since.setHours(0, 0, 0, 0);
-    since.setDate(since.getDate() - rangeMs);
+    const since = new Date(rangeStart);
 
     const [nextSummary, nextSessions, nextOptions] = await Promise.all([
       getStrengthSummary(since.getTime()),
-      getRecentSessionDetails(5),
+      getRecentSessionDetails(5, since.getTime()),
       getTrackedExerciseOptions(),
     ]);
 
@@ -300,16 +309,29 @@ export function StrengthSection({ rangeLabel }: { rangeLabel: string }) {
     setSessions(nextSessions);
     setOptions(nextOptions);
     setSelectedId((current) => current ?? nextOptions[0]?.id ?? null);
+    setLoadError(false);
     setLoaded(true);
-  }, [rangeMs]);
+  }, [rangeStart]);
 
   useEffect(() => {
+    let active = true;
     (async () => {
       try {
         await load();
-      } catch {}
+      } catch (error) {
+        console.warn("[thrivelens] strength section load failed:", error);
+        // Without this the card rendered "Loading strength data" forever on
+        // any DB error, with no message and no retry affordance.
+        if (active) setLoadError(true);
+      }
     })();
-  }, [load]);
+    return () => {
+      active = false;
+    };
+    // dataToken is bumped by this component's own Refresh button; refreshToken
+    // is bumped by the parent's pull-to-refresh. Both must invalidate the load,
+    // otherwise a refresh silently left every card showing pre-workout values.
+  }, [load, dataToken, refreshToken]);
 
   useEffect(() => {
     if (!selectedId) return;
@@ -325,15 +347,24 @@ export function StrengthSection({ rangeLabel }: { rangeLabel: string }) {
     return () => {
       active = false;
     };
-  }, [selectedId]);
+    // dataToken/refreshToken are included so an explicit refresh re-fetches the
+    // per-exercise progression. Previously only [selectedId] was a dependency,
+    // which meant tapping "Refresh" (or re-tapping the already-selected chip,
+    // which React bails out of) could never refetch these values.
+  }, [selectedId, dataToken, refreshToken]);
 
   const progress = progressFor && progressFor.id === selectedId ? progressFor.data : null;
 
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
     try {
+      // Bumping dataToken forces the per-exercise progression effect to re-run,
+      // which it previously could not do.
+      setDataToken((token) => token + 1);
       await load();
-    } catch {
+    } catch (error) {
+      console.warn("[thrivelens] strength refresh failed:", error);
+      setLoadError(true);
     } finally {
       setRefreshing(false);
     }
@@ -347,11 +378,20 @@ export function StrengthSection({ rangeLabel }: { rangeLabel: string }) {
         </Text>
         <Text variant="bodySmall" className="text-text-secondary">
           {rangeLabel === "7D" ? "This week" : `Last ${rangeLabel}`} ·{" "}
-          {loaded ? "pull down or tap refresh to update" : "loading"}
+          {loadError ? "could not load" : loaded ? "pull down or tap refresh to update" : "loading"}
         </Text>
       </View>
 
-      {summary ? (
+      {loadError ? (
+        <Card variant="elevated">
+          <Text variant="body" className="text-text-primary font-semibold">
+            Could not load strength data
+          </Text>
+          <Text variant="bodySmall" className="text-text-secondary mt-1">
+            Your logged workouts are safe. Pull down or tap refresh to try again.
+          </Text>
+        </Card>
+      ) : summary ? (
         <Overview summary={summary} rangeLabel={rangeLabel === "7D" ? "this week" : `last ${rangeLabel}`} />
       ) : (
         <Card variant="elevated">
@@ -383,7 +423,9 @@ export function StrengthSection({ rangeLabel }: { rangeLabel: string }) {
         {sessions.length === 0 ? (
           <Card variant="elevated">
             <Text variant="bodySmall" className="text-text-secondary">
-              No workouts logged yet. Log one from the Workout tab.
+              {loaded
+                ? `No workouts in the last ${rangeDays} days. Log one from the Workout tab.`
+                : "Loading workouts..."}
             </Text>
           </Card>
         ) : (

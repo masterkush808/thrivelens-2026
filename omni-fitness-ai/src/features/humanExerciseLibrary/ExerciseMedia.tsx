@@ -14,8 +14,12 @@ interface LoopProps {
 
 function Loop({ video, poster, onClose }: LoopProps) {
   const [failed, setFailed] = useState(false);
+  const [timedOut, setTimedOut] = useState(false);
   const [shown, setShown] = useState(false);
+  const [attempt, setAttempt] = useState(0);
   const ready = useRef(false);
+  const backgrounded = useRef(false);
+  const reduceMotionPaused = useRef(false);
 
   const player = useVideoPlayer(video, (instance) => {
     instance.loop = true;
@@ -26,33 +30,54 @@ function Loop({ video, poster, onClose }: LoopProps) {
     if (ready.current) return;
     ready.current = true;
     setShown(true);
-    player.play();
+  }, []);
+
+  // Playback is *derived* from the two reasons to be paused rather than toggled
+  // by each event independently. Toggling meant whichever event fired last won:
+  // a pause with no matching resume left the clip frozen on a single frame.
+  const syncPlayback = useCallback(() => {
+    if (backgrounded.current || reduceMotionPaused.current) player.pause();
+    else player.play();
   }, [player]);
 
   useEffect(() => {
     const status = player.addListener('statusChange', ({ status: next }) => {
       if (next === 'error') setFailed(true);
-      else if (next === 'readyToPlay') markReady();
+      else if (next === 'readyToPlay') syncPlayback();
     });
-
-    const watchdog = setTimeout(() => {
-      if (!ready.current) setFailed(true);
-    }, LOAD_TIMEOUT_MS);
 
     const background = AppState.addEventListener('change', (state) => {
-      if (state !== 'active') player.pause();
+      // Any non-'active' state pauses the clip, including the transient
+      // 'inactive' iOS emits for Control Centre, the notification shade or an
+      // incoming call. The flag must be cleared on the way back: it previously
+      // latched to true and was never reset, so the resume branch could never
+      // run again and the clip stayed frozen for the rest of the session.
+      backgrounded.current = state !== 'active';
+      syncPlayback();
     });
+
     const motion = AccessibilityInfo.addEventListener('reduceMotionChanged', (enabled) => {
-      if (enabled) player.pause();
+      reduceMotionPaused.current = enabled;
+      syncPlayback();
     });
 
     return () => {
-      clearTimeout(watchdog);
       status.remove();
       background.remove();
       motion.remove();
     };
-  }, [player, markReady]);
+  }, [player, syncPlayback]);
+
+  // Only a genuine player error is treated as unplayable. A slow first prepare
+  // is not a device-capability failure, so the timeout reports a load timeout
+  // with a working retry instead of permanently condemning a healthy bundled
+  // file. Keyed on `attempt` so a retry re-arms the watchdog.
+  useEffect(() => {
+    const watchdog = setTimeout(() => {
+      if (!ready.current) setTimedOut(true);
+    }, LOAD_TIMEOUT_MS);
+    return () => clearTimeout(watchdog);
+  }, [attempt]);
 
   return (
     <View>
@@ -62,6 +87,11 @@ function Loop({ video, poster, onClose }: LoopProps) {
           style={StyleSheet.absoluteFill}
           contentFit="contain"
           accessibilityLabel="Exercise still image"
+          // The poster sits underneath a playing video; keeping it in the
+          // accessibility tree made screen readers announce a still image over
+          // live motion.
+          accessibilityElementsHidden={shown}
+          importantForAccessibility={shown ? 'no-hide-descendants' : 'yes'}
         />
         {!failed && (
           <VideoView
@@ -71,6 +101,10 @@ function Loop({ video, poster, onClose }: LoopProps) {
             nativeControls
             playsInline
             useExoShutter={false}
+            // The poster is revealed only once a frame is actually painted.
+            // Previously 'readyToPlay' cleared this flag first, so the poster
+            // was hidden while the surface was still blank (transparent
+            // AVPlayerLayer on iOS, unshuttered SurfaceView on Android).
             onFirstFrameRender={markReady}
           />
         )}
@@ -80,6 +114,30 @@ function Loop({ video, poster, onClose }: LoopProps) {
           <Text style={styles.message}>
             This device could not play the bundled MP4. The still image above remains available.
           </Text>
+        </View>
+      )}
+      {timedOut && !failed && (
+        <View style={styles.error}>
+          <Text style={styles.message}>
+            This is taking longer than expected to load. The still image above is available in the
+            meantime.
+          </Text>
+          <Pressable
+            accessibilityRole="button"
+            onPress={() => {
+              setTimedOut(false);
+              ready.current = false;
+              // Re-hide the poster so the retry does not show a stale surface,
+              // and bump `attempt` to re-arm the load watchdog.
+              setShown(false);
+              setAttempt((n) => n + 1);
+              player.replace(video);
+              syncPlayback();
+            }}
+            style={styles.button}
+          >
+            <Text style={styles.buttonText}>Try again</Text>
+          </Pressable>
         </View>
       )}
       <Pressable accessibilityRole="button" onPress={onClose} style={styles.button}>
@@ -95,13 +153,22 @@ export default function ExerciseMedia({ asset, name }: { asset: BundledMedia; na
 
   useEffect(() => {
     let active = true;
-    void AccessibilityInfo.isReduceMotionEnabled().then((enabled) => {
-      if (active) setReduceMotion(enabled);
-    }).catch(() => { if (active) setReduceMotion(true); });
+    // Register the listener BEFORE querying the current value, and ignore the
+    // query result if the listener already reported a fresher value. The old
+    // order started the promise first, so a change made in that window was
+    // lost entirely and then overwritten by the stale promise value - defeating
+    // the reduce-motion behaviour for the session. This matches
+    // useMotionPreferences.ts and PressableScale.tsx.
+    let preferenceChanged = false;
     const subscription = AccessibilityInfo.addEventListener('reduceMotionChanged', (enabled) => {
+      if (!active) return;
+      preferenceChanged = true;
       setReduceMotion(enabled);
       if (enabled) setPlaying(false);
     });
+    void AccessibilityInfo.isReduceMotionEnabled().then((enabled) => {
+      if (active && !preferenceChanged) setReduceMotion(enabled);
+    }).catch(() => { if (active && !preferenceChanged) setReduceMotion(true); });
     return () => { active = false; subscription.remove(); };
   }, []);
 

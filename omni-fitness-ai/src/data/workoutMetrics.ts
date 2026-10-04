@@ -61,6 +61,10 @@ export function logVolumeKg(log: RepsSource): number {
   const weight = log.weight ?? 0;
   const sets = log.setsCompleted ?? 0;
   const reps = repsPerSet(log.reps);
+  // `weight > 0` alone rejects NaN but lets Infinity through (Infinity > 0),
+  // which would propagate an Infinity tonnage into the UI. Number.isFinite
+  // closes that gap.
+  if (!Number.isFinite(weight) || !Number.isFinite(sets) || !Number.isFinite(reps)) return 0;
   if (!(weight > 0) || !(sets > 0) || !(reps > 0)) return 0;
   return weight * reps * sets;
 }
@@ -69,6 +73,7 @@ export function logVolumeKg(log: RepsSource): number {
 export function setVolumeKg(log: RepsSource): number {
   const weight = log.weight ?? 0;
   const reps = repsInBestSet(log);
+  if (!Number.isFinite(weight) || !Number.isFinite(reps)) return 0;
   if (!(weight > 0) || !(reps > 0)) return 0;
   return weight * reps;
 }
@@ -80,7 +85,8 @@ export function setVolumeKg(log: RepsSource): number {
  * bodyweight work.
  */
 export function estimateOneRepMax(weightKg: number | null, reps: number): number | null {
-  if (weightKg === null || !(weightKg > 0) || !(reps > 0) || reps > 15) return null;
+  if (weightKg === null || !Number.isFinite(weightKg) || !Number.isFinite(reps)) return null;
+  if (!(weightKg > 0) || !(reps > 0) || reps > 15) return null;
   return weightKg * (1 + reps / 30);
 }
 

@@ -57,9 +57,24 @@ export default function WorkoutLoggerScreen() {
     setRows((prev) => prev.filter((_, i) => i !== index));
   };
 
+  // A weight is a plain non-negative decimal. Previously any string that
+  // parseFloat could start on was accepted, so "1.2.3" passed validation and
+  // was silently stored as 1.2.
   const validWeight = (value: string): boolean => {
-    const parsed = Number.parseFloat(value);
+    const trimmed = value.trim();
+    if (trimmed === "" || !/^\d*\.?\d*$/.test(trimmed)) return false;
+    const parsed = Number.parseFloat(trimmed);
     return Number.isFinite(parsed) && parsed >= 0;
+  };
+
+  // Sets and reps must be a whole number of at least 1. They used to fall back
+  // to 1 via `parseInt(...) || 1`, so an empty or zero field was recorded as a
+  // real set of 1 - fabricating data and understating volume.
+  const validCount = (value: string): boolean => {
+    const trimmed = value.trim();
+    if (!/^\d+$/.test(trimmed)) return false;
+    const parsed = Number.parseInt(trimmed, 10);
+    return Number.isFinite(parsed) && parsed >= 1 && parsed <= 999;
   };
 
   const completeWorkout = async () => {
@@ -74,6 +89,20 @@ export default function WorkoutLoggerScreen() {
       );
       return;
     }
+    if (rows.some((row) => !validCount(row.sets))) {
+      Alert.alert(
+        "Incomplete sets",
+        "Enter how many sets you completed for every exercise (at least 1).",
+      );
+      return;
+    }
+    if (rows.some((row) => !validCount(row.reps))) {
+      Alert.alert(
+        "Incomplete reps",
+        "Enter how many reps per set for every exercise (at least 1).",
+      );
+      return;
+    }
     setSaving(true);
     try {
       await logWorkout({
@@ -81,9 +110,9 @@ export default function WorkoutLoggerScreen() {
         exercises: rows.map((row) => ({
           exerciseId: row.exerciseId,
           exerciseName: row.exerciseName,
-          sets: Math.max(1, Number.parseInt(row.sets, 10) || 1),
-          repsPerSet: Math.max(1, Number.parseInt(row.reps, 10) || 1),
-          weightKg: Number.parseFloat(row.weight) || 0,
+          sets: Number.parseInt(row.sets, 10),
+          repsPerSet: Number.parseInt(row.reps, 10),
+          weightKg: Number.parseFloat(row.weight.trim()),
         })),
       });
       router.back();
@@ -244,7 +273,7 @@ export default function WorkoutLoggerScreen() {
                         <RNTextInput
                           className="bg-surface-highlight rounded-lg px-3 py-2 text-text-primary"
                           value={row.weight}
-                          onChangeText={(v) => updateRow(index, "weight", v.replace(/[^0-9.]/g, ""))}
+                          onChangeText={(v) => updateRow(index, "weight", v.replace(/[^\d.]/g, "").slice(0, 6))}
                           keyboardType="numeric"
                           placeholder="0"
                           placeholderTextColor="#ABA291"

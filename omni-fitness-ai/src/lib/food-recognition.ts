@@ -1,5 +1,6 @@
 import * as Crypto from "expo-crypto";
 import * as FileSystem from "expo-file-system";
+import { Platform } from "react-native";
 import { addFoodLog } from "@/data/foodRepository";
 import type { FoodLog } from "@/db";
 
@@ -200,6 +201,24 @@ export async function detectFood(uri: string): Promise<AnalysisOutcome> {
     return cloud;
   };
 
+  /**
+   * On-device fallback. Returns null instead of throwing when it is not usable,
+   * so callers can fall through to their own error.
+   *
+   * The classifier uses @tensorflow/tfjs-react-native's bundleResourceIO and
+   * decodeJpeg, which are native modules with no web implementation. On web the
+   * attempt would pull a large TFJS bundle only to fail, so it is skipped.
+   */
+  const tryLocalClassifier = async (): Promise<AnalyzeResult | null> => {
+    if (Platform.OS === "web") return null;
+    try {
+      return await localClassify(uri);
+    } catch (error) {
+      console.warn("[thrivelens] detectFood: local classifier failed", String(error));
+      return null;
+    }
+  };
+
   if (isZeroGPUConfigured()) {
     try {
       result = await tryZeroGPU();
@@ -227,8 +246,19 @@ export async function detectFood(uri: string): Promise<AnalysisOutcome> {
   } else {
     try {
       result = await tryLAN();
-    } catch (error) {
-      throw error as InferenceError;
+      source = "cloud";
+    } catch (cloudError) {
+      // Previously this branch simply rethrew, so the on-device classifier was
+      // only ever reachable when ZeroGPU was configured. With no inference
+      // backend configured at all (the default), photo analysis failed outright
+      // even though a bundled MobileNetV2 model was available as a fallback.
+      const localResult = await tryLocalClassifier();
+      if (localResult) {
+        result = localResult;
+        source = "local";
+      } else {
+        throw cloudError as InferenceError;
+      }
     }
   }
   const candidates = result.candidates.map((candidate) => ({

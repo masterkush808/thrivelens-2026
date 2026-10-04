@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { PremiumScreen } from "@/components/brand/PremiumScreen";
-import { ActivityIndicator, Pressable, ScrollView, View } from "react-native";
+import { ActivityIndicator, Platform, Pressable, ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useLocalSearchParams, router } from "expo-router";
 import MapView, { Marker } from "react-native-maps";
@@ -179,6 +179,34 @@ export default function MapsScreen() {
                         void load(true);
                       }}
                     />
+                  </View>
+                ) : Platform.OS === "web" ? (
+                  // react-native-maps resolves to react-native-web's
+                  // UnimplementedView on web, so <MapView> rendered as an empty
+                  // box in the deployed PWA. Show an honest explanation and a
+                  // working handoff instead of a dead view. The nearby list
+                  // below and its Directions buttons work on web.
+                  <View className="p-6 gap-3">
+                    <Text variant="body" className="text-text-primary font-semibold">
+                      Interactive map is not available in the browser
+                    </Text>
+                    <Text variant="bodySmall" className="text-text-secondary leading-5">
+                      The interactive map needs the mobile app. On the web you can still browse
+                      the {places.length} nearby {places.length === 1 ? "place" : "places"} below and
+                      open turn-by-turn directions in Google Maps.
+                    </Text>
+                    {position ? (
+                      <Button
+                        variant="secondary"
+                        size="sm"
+                        title="Open Google Maps here"
+                        onPress={() => {
+                          void openDirections(position.lat, position.lng, "your location").catch(
+                            (err: unknown) => setError((err as PlacesError).message),
+                          );
+                        }}
+                      />
+                    ) : null}
                   </View>
                 ) : (
                   <MapView

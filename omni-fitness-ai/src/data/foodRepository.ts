@@ -108,3 +108,16 @@ export async function getRecentFoodLogs(limit: number = 10): Promise<FoodLog[]> 
   const userId = await currentUserId();
   return recentFoodLogs(limit, userId ?? undefined);
 }
+
+/**
+ * All food logs since `epochMs`, for charting a multi-day window.
+ *
+ * The calorie chart on Tracking used to be built from `getTodayFoodLogs()`,
+ * whose result set can only ever contain entries from the current day. Every
+ * filter (7D/30D/3M/6M) therefore rendered exactly one bar with data no matter
+ * how much history existed.
+ */
+export async function getFoodLogsSince(epochMs: number): Promise<FoodLog[]> {
+  const userId = await currentUserId();
+  return foodLogsSince(epochMs, 5000, userId ?? undefined);
+}

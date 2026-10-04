@@ -30,6 +30,7 @@ import {
   getWorkoutCountSince,
   getWorkoutVolumeSince,
 } from "@/data/workoutRepository";
+import { formatVolume } from "@/data/workoutMetrics";
 import { WorkoutSession, latestCheatDay } from "@/db";
 import { buildAdherenceSnapshot } from "@/data/adherenceRepo";
 import { currentUserId } from "@/lib/auth";
@@ -400,7 +401,7 @@ export default function HomeScreen() {
                         {dateLabel(session.completedAt)}
                       </Text>
                       <Text variant="bodySmall" className="text-text-primary font-semibold">
-                        {Math.round(session.totalVolume ?? 0).toLocaleString()} kg moved
+                        {formatVolume(session.totalVolume ?? 0)} moved
                       </Text>
                     </View>
                   ))}
@@ -433,7 +434,7 @@ export default function HomeScreen() {
                 </View>
                 <View className="items-center">
                   <Text variant="statSmall" className="text-success">
-                    {Math.round(weeklyVolume).toLocaleString()} kg
+                    {formatVolume(weeklyVolume)}
                   </Text>
                   <Text variant="caption" className="text-text-tertiary">
                     Volume moved

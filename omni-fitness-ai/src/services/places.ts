@@ -85,9 +85,12 @@ function overpassElementToPlace(
   const lon = element.lon ?? element.center?.lon;
   const tags = element.tags ?? {};
   const name = tags.name?.trim();
-  if (name === undefined || name === null || name === "" || lat === undefined || lon === undefined) {
-    return null;
-  }
+  // `!== undefined` alone let NaN through, producing NaN distances and
+  // navigation URLs such as "google.navigation:q=NaN,NaN".
+  if (!name) return null;
+  if (typeof lat !== "number" || typeof lon !== "number") return null;
+  if (!Number.isFinite(lat) || !Number.isFinite(lon)) return null;
+  if (lat < -90 || lat > 90 || lon < -180 || lon > 180) return null;
   return {
     id: `osm-${element.id}`,
     name,
@@ -212,7 +215,14 @@ async function searchGooglePlaces(
     return (json.results ?? [])
       .map<Place | null>((result) => {
         const location = result.geometry?.location;
-        if (!location?.lat || !location?.lng) {
+        // A falsy check dropped legitimate results at (0, 0) - the equator and
+        // prime meridian are valid coordinates.
+        if (
+          typeof location?.lat !== "number" ||
+          typeof location?.lng !== "number" ||
+          !Number.isFinite(location.lat) ||
+          !Number.isFinite(location.lng)
+        ) {
           return null;
         }
         const hours = result.opening_hours;
@@ -299,6 +309,14 @@ export async function openDirections(
   lng: number,
   name: string,
 ): Promise<void> {
+  // Reject bad coordinates up front rather than building a malformed deep link
+  // such as "google.navigation:q=NaN,NaN&mode=d".
+  if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
+    throw placesError("invalid", `Could not start directions to ${name}: invalid coordinates.`);
+  }
+  if (lat < -90 || lat > 90 || lng < -180 || lng > 180) {
+    throw placesError("invalid", `Could not start directions to ${name}: invalid coordinates.`);
+  }
   const coords = `${lat},${lng}`;
   let url: string;
   if (Platform.OS === "android") {
