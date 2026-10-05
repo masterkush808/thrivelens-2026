@@ -53,7 +53,7 @@ export async function addFoodLog(input: AddFoodInput): Promise<FoodLog> {
   });
 
   if (supabaseConfigured) {
-    enqueueOperation({
+    await enqueueOperation({
       operationId: `${userId}:food_logs:${id}`,
       userId,
       entity: "food_logs",

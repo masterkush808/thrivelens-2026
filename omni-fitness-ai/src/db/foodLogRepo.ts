@@ -1,9 +1,9 @@
 import { and, desc, eq, gte } from "drizzle-orm";
-
 import { db, ensureSchema } from "./client";
+
 import { foodLogs, FoodLog, NewFoodLog } from "./schema";
 
-ensureSchema();
+void ensureSchema();
 
 export async function insertFoodLog(input: NewFoodLog): Promise<FoodLog> {
   await db.insert(foodLogs).values(input);

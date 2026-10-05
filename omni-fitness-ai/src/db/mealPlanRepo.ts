@@ -3,7 +3,7 @@ import { desc, eq } from "drizzle-orm";
 import { db, ensureSchema } from "./client";
 import { mealPlans, MealPlan, NewMealPlan } from "./schema";
 
-ensureSchema();
+void ensureSchema();
 
 export async function upsertMealPlan(input: NewMealPlan): Promise<MealPlan> {
   await db.delete(mealPlans).where(eq(mealPlans.userId, input.userId));

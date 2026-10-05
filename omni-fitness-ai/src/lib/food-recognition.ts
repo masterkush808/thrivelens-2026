@@ -1,8 +1,10 @@
 import * as Crypto from "expo-crypto";
-import * as FileSystem from "expo-file-system";
-import { Platform } from "react-native";
 import { addFoodLog } from "@/data/foodRepository";
 import type { FoodLog } from "@/db";
+// Platform-split: resolves to local-classifier.native.ts on ios/android and
+// local-classifier.web.ts on web, so @tensorflow/tfjs never enters the browser
+// bundle. See local-classifier.web.ts for why that is mandatory.
+import { classifyLocally } from "./local-classifier";
 
 import {
   AnalyzeResult,
@@ -51,128 +53,8 @@ export interface ConfirmedFood {
   log: FoodLog;
 }
 
-export const LOCAL_MODEL_REVISION = "tfjs/mobilenetv2";
-const LOCAL_INPUT_SIZE = 160;
-const LOCAL_TOP_K = 5;
-const LOCAL_MIN_CONFIDENCE = 0.08;
-
 export function buildRequestId(): string {
   return Crypto.randomUUID();
-}
-
-function localClassifierUnavailable(): InferenceError {
-  return {
-    code: "unavailable",
-    message: "Could not analyze the photo. Please check your connection and try again.",
-  };
-}
-
-interface LocalClassifier {
-  runner(uri: string): Promise<AnalyzeResult>;
-}
-
-let localModelPromise: Promise<LocalClassifier | null> | null = null;
-
-async function loadLocalClassifier(): Promise<LocalClassifier | null> {
-  try {
-    // Dynamic import keeps TF.js out of the initial bundle; it is only pulled
-    // in when the on-device fallback classifier is first needed.
-    const tf = await import("@tensorflow/tfjs");
-    const tfrn = await import("@tensorflow/tfjs-react-native");
-    await tf.ready();
-    try {
-      await tf.setBackend("rn-webgl");
-    } catch {
-      await tf.setBackend("cpu");
-    }
-
-    const modelJson = require("@/assets/ml/tfjs/model.json");
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const shard1 = require("@/assets/ml/tfjs/group1-shard1of3.bin");
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const shard2 = require("@/assets/ml/tfjs/group1-shard2of3.bin");
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const shard3 = require("@/assets/ml/tfjs/group1-shard3of3.bin");
-    const model = await tf.loadLayersModel(
-      tfrn.bundleResourceIO(modelJson, [shard1, shard2, shard3]),
-    );
-
-    const labelsRecord = require("@/assets/ml/labels.json") as { labels?: string[] };
-    const labels: string[] = labelsRecord.labels ?? [];
-
-    const runner: LocalClassifier["runner"] = async (uri: string) => {
-let pre: import("@tensorflow/tfjs").Tensor | null = null;
-      let batched: import("@tensorflow/tfjs").Tensor | null = null;
-      let logits: import("@tensorflow/tfjs").Tensor | null = null;
-      try {
-        const base64 = await FileSystem.readAsStringAsync(uri, {
-          encoding: FileSystem.EncodingType.Base64,
-        });
-        const bytes = Uint8Array.from(atob(base64), (c) => c.charCodeAt(0));
-        // decodeJpeg yields uint8 [0,255]; the exported TF.js graph embeds the
-        // mobilenet preprocess (truediv 127.5, subtract 1), so feed raw pixels.
-        pre = tf.image.resizeBilinear(tfrn.decodeJpeg(bytes, 3).toFloat(), [
-          LOCAL_INPUT_SIZE,
-          LOCAL_INPUT_SIZE,
-        ]);
-        batched = pre!.expandDims(0);
-        logits = (await model.predict(batched)) as import("@tensorflow/tfjs").Tensor;
-        const probs = Array.from(await logits.data());
-        const indexed = labels.map((name, index) => ({
-          name,
-          confidence: probs[index] ?? 0,
-        }));
-        indexed.sort((a, b) => b.confidence - a.confidence);
-        const top = indexed
-          .filter((item) => item.confidence >= LOCAL_MIN_CONFIDENCE)
-          .slice(0, LOCAL_TOP_K)
-          .map((item) => ({
-            name: item.name,
-            task: "food_classification",
-            confidence: item.confidence,
-          }));
-        if (top.length === 0) {
-          return {
-            request_id: buildRequestId(),
-            model_revision: LOCAL_MODEL_REVISION,
-            candidate_status: "abstained",
-            candidates: [],
-            confidence: null,
-            abstention_reason: "Low on-device confidence for this photo.",
-            is_mock: false,
-          };
-        }
-        return {
-          request_id: buildRequestId(),
-          model_revision: LOCAL_MODEL_REVISION,
-          candidate_status: "candidate",
-          candidates: top,
-          confidence: top[0].confidence,
-          abstention_reason: null,
-          is_mock: false,
-        };
-      } finally {
-        pre?.dispose();
-        batched?.dispose();
-        logits?.dispose();
-      }
-    };
-
-    return { runner };
-  } catch {
-    return null;
-  }
-}
-
-async function localClassify(uri: string): Promise<AnalyzeResult> {
-  if (!localModelPromise) {
-    localModelPromise = loadLocalClassifier();
-  }
-  const classifier = await localModelPromise;
-  if (!classifier) {
-    throw localClassifierUnavailable();
-  }
-  return classifier.runner(uri);
 }
 
 export async function detectFood(uri: string): Promise<AnalysisOutcome> {
@@ -205,14 +87,13 @@ export async function detectFood(uri: string): Promise<AnalysisOutcome> {
    * On-device fallback. Returns null instead of throwing when it is not usable,
    * so callers can fall through to their own error.
    *
-   * The classifier uses @tensorflow/tfjs-react-native's bundleResourceIO and
-   * decodeJpeg, which are native modules with no web implementation. On web the
-   * attempt would pull a large TFJS bundle only to fail, so it is skipped.
+   * On web `classifyLocally` resolves to a stub returning null, because
+   * @tensorflow/tfjs cannot initialise in a browser without cross-origin
+   * isolation. Web therefore relies on the ZeroGPU Space.
    */
   const tryLocalClassifier = async (): Promise<AnalyzeResult | null> => {
-    if (Platform.OS === "web") return null;
     try {
-      return await localClassify(uri);
+      return await classifyLocally(uri);
     } catch (error) {
       console.warn("[thrivelens] detectFood: local classifier failed", String(error));
       return null;
@@ -230,16 +111,16 @@ export async function detectFood(uri: string): Promise<AnalysisOutcome> {
         result = await tryLAN();
         source = "cloud";
       } catch (cloudError) {
-        try {
-          result = await localClassify(uri);
+        const localResult = await tryLocalClassifier();
+        if (localResult) {
+          result = localResult;
           source = "local";
-        } catch (localError) {
+        } else {
           console.warn(
             "[thrivelens] detectFood: all analysis paths failed",
             (cloudError as InferenceError).code,
-            (localError as InferenceError).code,
           );
-          throw localError as InferenceError;
+          throw cloudError as InferenceError;
         }
       }
     }

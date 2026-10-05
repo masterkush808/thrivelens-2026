@@ -11,7 +11,7 @@
  * deliberately not precached; it is large and the browser range-caches it.
  */
 
-const VERSION = 'thrivelens-v1';
+const VERSION = 'thrivelens-v2';
 const SHELL_CACHE = `${VERSION}-shell`;
 const ASSET_CACHE = `${VERSION}-assets`;
 

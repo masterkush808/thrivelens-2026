@@ -3,7 +3,7 @@ import { and, asc, eq } from "drizzle-orm";
 import { db, ensureSchema } from "./client";
 import { schedules, Schedule, NewSchedule } from "./schema";
 
-ensureSchema();
+void ensureSchema();
 
 export async function insertSchedules(inputs: NewSchedule[]): Promise<Schedule[]> {
   for (const input of inputs) {

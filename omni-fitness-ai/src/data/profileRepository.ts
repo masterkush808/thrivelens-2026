@@ -142,7 +142,7 @@ export async function updateCurrentProfile(update: ProfileUpdate): Promise<Profi
     .select("*")
     .single();
   if (error) {
-    enqueueOperation({
+    await enqueueOperation({
       operationId: `${user.id}:profiles:${Date.now()}`,
       userId: user.id,
       entity: "profiles",
@@ -157,7 +157,7 @@ export async function updateCurrentProfile(update: ProfileUpdate): Promise<Profi
 
 export async function clearAccountCache(userId: string) {
   const { clearUserOutbox } = await import("@/db/outbox");
-  clearUserOutbox(userId);
+  await clearUserOutbox(userId);
   await AsyncStorage.removeItem(`profile:${userId}`);
 }
 

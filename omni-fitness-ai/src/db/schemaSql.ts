@@ -1,12 +1,10 @@
-import * as SQLite from "expo-sqlite";
-import { drizzle } from "drizzle-orm/expo-sqlite";
-
-import * as schema from "./schema";
-
-export const sqlite = SQLite.openDatabaseSync("thrivelens.db");
-
-export function ensureSchema(): void {
-  sqlite.execSync(`
+/**
+ * Shared schema DDL for the local SQLite store.
+ *
+ * Kept in its own module so the native and web clients can both apply it
+ * without duplicating the statements.
+ */
+export const SCHEMA_SQL = `
     PRAGMA foreign_keys = ON;
     CREATE TABLE IF NOT EXISTS food_logs (
       id TEXT PRIMARY KEY NOT NULL,
@@ -183,10 +181,4 @@ export function ensureSchema(): void {
     );
     CREATE INDEX IF NOT EXISTS schedules_user_idx
       ON schedules(user_id, status, scheduled_for);
-  `);
-}
-
-ensureSchema();
-
-export const database = sqlite;
-export const db = drizzle(sqlite, { schema });
+`;

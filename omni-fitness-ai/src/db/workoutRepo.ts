@@ -16,7 +16,7 @@ import {
   WorkoutSession,
 } from "./schema";
 
-ensureSchema();
+void ensureSchema();
 
 export async function insertExercise(input: NewExercise): Promise<Exercise> {
   await db.insert(exercises).values(input).onConflictDoNothing();

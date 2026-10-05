@@ -9,7 +9,7 @@ import {
 export async function flushOutbox(userId: string) {
   if (!supabaseConfigured) return;
 
-  const operations = listReadyOperations(userId);
+  const operations = await listReadyOperations(userId);
 
   for (const operation of operations) {
     try {
@@ -34,14 +34,14 @@ export async function flushOutbox(userId: string) {
       } else {
         throw new Error(`Unsupported outbox operation: ${operation.entity}/${operation.operation}`);
       }
-      markOperationSucceeded(operation.operation_id);
+      await markOperationSucceeded(operation.operation_id);
     } catch (error) {
       const message = error instanceof Error ? error.message : "Unknown sync error";
       if (message.includes("409") || message.includes("412") || message.toLowerCase().includes("conflict")) {
-        markOperationConflict(operation.operation_id, message);
+        await markOperationConflict(operation.operation_id, message);
         continue;
       }
-      markOperationFailed(
+      await markOperationFailed(
         operation.operation_id,
         operation.attempts,
         message,

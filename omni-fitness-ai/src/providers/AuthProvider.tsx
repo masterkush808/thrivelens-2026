@@ -149,7 +149,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
         const userId = user?.id;
         if (userId) {
           await deleteLocalAccount(userId);
-          clearUserOutbox(userId);
+          await clearUserOutbox(userId);
         }
       },
     }),

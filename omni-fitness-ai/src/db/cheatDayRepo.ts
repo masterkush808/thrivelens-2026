@@ -3,7 +3,7 @@ import { desc, eq } from "drizzle-orm";
 import { db, ensureSchema } from "./client";
 import { cheatDays, CheatDay, NewCheatDay } from "./schema";
 
-ensureSchema();
+void ensureSchema();
 
 export async function insertCheatDay(input: NewCheatDay): Promise<CheatDay> {
   await db.insert(cheatDays).values(input);

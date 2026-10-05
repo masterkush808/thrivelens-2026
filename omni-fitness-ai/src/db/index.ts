@@ -1,4 +1,4 @@
-export { db, sqlite, ensureSchema } from "./client";
+export { db, database, ensureSchema } from "./client";
 export {
   foodLogs,
   FoodLog,

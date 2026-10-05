@@ -3,7 +3,7 @@ import { and, asc, eq } from "drizzle-orm";
 import { db, ensureSchema } from "./client";
 import { fridgeItems, FridgeItem, NewFridgeItem } from "./schema";
 
-ensureSchema();
+void ensureSchema();
 
 export async function insertFridgeItems(inputs: NewFridgeItem[]): Promise<FridgeItem[]> {
   for (const input of inputs) {
