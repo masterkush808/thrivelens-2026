@@ -859,11 +859,14 @@ async function gradioAnalyze(filePath: string): Promise<ZeroGPUAnalyzeResult> {
     "Content-Type": "application/json",
   };
   try {
-    const response = await fetch(`${ZEROGPU_URL}/gradio_api/call/analyze`, {
+    const response = await fetch(`${ZEROGPU_URL}/gradio_api/call/v2/analyze`, {
       method: "POST",
       headers,
+      // Gradio v2 addresses parameters by NAME. Posting the positional
+      // `data: [...]` array used by v1 makes the JSON file payload arrive as a
+      // string, which the Space then rejects with a validation error.
       body: JSON.stringify({
-        data: [{ path: filePath, meta: { _type: "gradio.FileData" } }],
+        filepath: { path: filePath, meta: { _type: "gradio.FileData" } },
       }),
       signal: controller.signal,
     });
@@ -902,10 +905,13 @@ async function gradioRun(apiName: string, payload: unknown, timeoutMs: number): 
     "Content-Type": "application/json",
   };
   try {
-    const response = await fetch(`${ZEROGPU_URL}/gradio_api/call/${apiName}`, {
+    const response = await fetch(`${ZEROGPU_URL}/gradio_api/call/v2/${apiName}`, {
       method: "POST",
       headers,
-      body: JSON.stringify({ data: [payload] }),
+      // Named parameter (v2), matching the Space's `gr.JSON` input named
+      // "payload". The v1 positional form arrives as a JSON string and fails
+      // pydantic validation on the Space.
+      body: JSON.stringify({ payload }),
       signal: controller.signal,
     });
     if (response.status === 429 || response.status === 402) {
