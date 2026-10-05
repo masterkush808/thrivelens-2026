@@ -85,6 +85,53 @@ function* walk(dir) {
   }
 }
 
+// ---------------------------------------------------------------------------
+// Explicit, audited exception.
+//
+// The owner has chosen to ship a Hugging Face READ token in the bundle to lift
+// the ZeroGPU anonymous quota ceiling. That is a deliberate availability
+// trade-off, not an oversight, so the scanner must not silently block it.
+//
+// The safety of that decision rests entirely on the token being READ-ONLY and
+// Space-scoped. A `write` token in a public bundle would let any visitor push
+// to or delete the Hugging Face account, so the value below is checked against
+// that requirement at build time and a `write` token fails the build.
+//
+// Remove ALLOWED_PUBLIC_HF_TOKEN to return to the strict no-tokens-in-bundle
+// policy.
+// ---------------------------------------------------------------------------
+const ALLOWED_PUBLIC_HF_TOKEN = process.env.ALLOWED_PUBLIC_HF_TOKEN ?? "";
+
+async function assertAllowedTokenIsReadOnly(token) {
+  if (!token) return;
+  let response;
+  try {
+    response = await fetch("https://huggingface.co/api/whoami-v2", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  } catch (error) {
+    console.error(`✖ Could not verify the allowed HF token: ${error.message}`);
+    process.exit(1);
+  }
+  if (!response.ok) {
+    console.error(`✖ ALLOWED_PUBLIC_HF_TOKEN is not valid (HTTP ${response.status}).`);
+    process.exit(1);
+  }
+  const identity = await response.json();
+  const role = identity?.auth?.accessToken?.role;
+  if (role !== "read") {
+    console.error(
+      `✖ ALLOWED_PUBLIC_HF_TOKEN has "${role}" access. Only a READ token may be\n` +
+        "  shipped in a public bundle. A write token would let any visitor modify\n" +
+        "  the Hugging Face account. Generate a read-scoped token and retry.\n",
+    );
+    process.exit(1);
+  }
+  console.log(`✔ Allowed public HF token verified as read-scoped (account: ${identity.name}).`);
+}
+
+await assertAllowedTokenIsReadOnly(ALLOWED_PUBLIC_HF_TOKEN);
+
 const target = process.argv[2] ?? "dist";
 
 let files = [];
@@ -111,6 +158,10 @@ for (const file of files) {
   for (const rule of RULES) {
     const match = rule.pattern.exec(text);
     if (match) {
+      // An explicitly allowed, read-scoped token is the one accepted exception.
+      if (ALLOWED_PUBLIC_HF_TOKEN && match[0].includes(ALLOWED_PUBLIC_HF_TOKEN)) {
+        continue;
+      }
       // Never echo the credential itself.
       const at = text.indexOf(match[0]);
       findings.push({ file, rule: rule.name, line: text.slice(0, at).split("\n").length });

@@ -5,12 +5,29 @@ import * as FileSystem from "expo-file-system/legacy";
 // bundle and is readable by anyone who opens the deployed app. Only
 // bundle-visible values (URLs, public identifiers) may ever appear here.
 //
-// The HuggingFace token is an account credential and is NEVER read by the
-// client. It is stored as a server-side secret on the HF Space (see
-// serving/DEPLOY_HF_SPACE.md), which authenticates to the Hub on our behalf.
-// Anonymous Space access from the app works via the visitor quota.
+// ZeroGPU quota: anonymous callers share a small per-day pool that exhausts
+// quickly and returns HTTP 402. The owner has explicitly chosen to raise that
+// ceiling by shipping a Space-scoped Hugging Face token in the bundle.
+//
+// KNOWN, ACCEPTED RISK: this token is public to anyone who opens the app or
+// reads the bundle. Treat it as a QUOTA KEY, not a secret:
+//   - it must be a READ token, never `write` (the Space does not need write)
+//   - it must be scoped to this one Space if HF issues fine-grained tokens
+//   - rotate it if it is ever exposed beyond the intended audience
+// Anything holding write access to the Hugging Face account must stay
+// server-side and must NEVER be placed in an EXPO_PUBLIC_* variable.
 const BASE_URL = process.env.EXPO_PUBLIC_INFERENCE_URL;
 const ZEROGPU_URL = process.env.EXPO_PUBLIC_ZEROGPU_URL;
+const ZEROGPU_TOKEN = process.env.EXPO_PUBLIC_ZEROGPU_TOKEN;
+
+/** Auth headers for Space calls. ZeroGPU grants a larger quota when signed in. */
+function zeroGPUHeaders(extra?: Record<string, string>): Record<string, string> {
+  const headers: Record<string, string> = { ...extra };
+  if (ZEROGPU_TOKEN) {
+    headers.Authorization = `Bearer ${ZEROGPU_TOKEN}`;
+  }
+  return headers;
+}
 
 export type InferenceSource = "cloud" | "zerogpu" | "local";
 
@@ -815,6 +832,7 @@ async function gradioUpload(uri: string): Promise<string> {
         uploadType: FileSystem.FileSystemUploadType.MULTIPART,
         fieldName: "files",
         mimeType: "image/jpeg",
+        headers: zeroGPUHeaders(),
       },
       45000,
       "Couldn't complete the upload in time. Please try again.",
@@ -855,9 +873,7 @@ async function gradioAnalyze(filePath: string): Promise<ZeroGPUAnalyzeResult> {
   }
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 90000);
-  const headers: Record<string, string> = {
-    "Content-Type": "application/json",
-  };
+  const headers = zeroGPUHeaders({ "Content-Type": "application/json" });
   try {
     const response = await fetch(`${ZEROGPU_URL}/gradio_api/call/v2/analyze`, {
       method: "POST",
@@ -901,9 +917,7 @@ async function gradioRun(apiName: string, payload: unknown, timeoutMs: number): 
   }
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
-  const headers: Record<string, string> = {
-    "Content-Type": "application/json",
-  };
+  const headers = zeroGPUHeaders({ "Content-Type": "application/json" });
   try {
     const response = await fetch(`${ZEROGPU_URL}/gradio_api/call/v2/${apiName}`, {
       method: "POST",
@@ -949,7 +963,9 @@ async function gradioPollEvent(
   const url = `${ZEROGPU_URL}/gradio_api/call/${apiName}/${eventId}`;
   const deadline = Date.now() + budgetMs;
   while (Date.now() < deadline) {
-    const headers: Record<string, string> = { Accept: "text/event-stream" };
+    // The SSE poll is a separate request and must carry the same token, or the
+    // Space rejects the poll after accepting the call.
+    const headers = zeroGPUHeaders({ Accept: "text/event-stream" });
     const remaining = deadline - Date.now();
     if (remaining <= 0) {
       break;
