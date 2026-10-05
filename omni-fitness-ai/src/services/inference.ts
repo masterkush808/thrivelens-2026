@@ -1,5 +1,9 @@
 import * as Crypto from "expo-crypto";
-import * as FileSystem from "expo-file-system/legacy";
+// Platform-split: expo-file-system's UploadTask on native, fetch + FormData on
+// web. The legacy upload API throws UnavailabilityError in a browser because
+// expo-file-system has no web implementation. See upload.web.ts.
+import { multipartUpload } from "./upload";
+import type { MultipartUploadOptions, MultipartUploadResult } from "./upload";
 
 // SECURITY: every EXPO_PUBLIC_* value below is inlined into the public web
 // bundle and is readable by anyone who opens the deployed app. Only
@@ -662,14 +666,13 @@ export async function analyzeImage(uri: string, requestId?: string): Promise<Ana
       `${BASE_URL}/v1/food/analyze`,
       uri,
       {
-        httpMethod: "POST",
-        uploadType: FileSystem.FileSystemUploadType.MULTIPART,
-        fieldName: "image",
+        uri,
+        fileFieldName: "image",
         mimeType: "image/jpeg",
-        parameters: { request_id: rid },
+        fields: [{ name: "request_id", value: rid }],
         headers,
+        timeoutMs: 45000,
       },
-      45000,
       "Couldn't complete the analysis in time. Please try again.",
     );
     if (result.status < 200 || result.status >= 300) {
@@ -796,26 +799,17 @@ function zeroGPUError(
 async function nativeUpload(
   url: string,
   uri: string,
-  options: FileSystem.FileSystemUploadOptions,
-  timeoutMs: number,
+  options: MultipartUploadOptions,
   timeoutMessage: string,
-): Promise<FileSystem.FileSystemUploadResult> {
-  const task = FileSystem.createUploadTask(url, uri, options);
-  let timer: ReturnType<typeof setTimeout> | null = null;
-  const timeout = new Promise<null>((resolve) => {
-    timer = setTimeout(() => {
-      void task.cancelAsync();
-      resolve(null);
-    }, timeoutMs);
-  });
-  const result = await Promise.race([task.uploadAsync(), timeout]);
-  if (timer) {
-    clearTimeout(timer);
+): Promise<MultipartUploadResult> {
+  try {
+    return await multipartUpload(url, options);
+  } catch (error) {
+    if (error instanceof Error && error.message === "upload-timeout") {
+      throw zeroGPUError("timeout", timeoutMessage);
+    }
+    throw error;
   }
-  if (!result) {
-    throw zeroGPUError("timeout", timeoutMessage);
-  }
-  return result;
 }
 
 async function gradioUpload(uri: string): Promise<string> {
@@ -828,13 +822,12 @@ async function gradioUpload(uri: string): Promise<string> {
       `${ZEROGPU_URL}/gradio_api/upload`,
       uri,
       {
-        httpMethod: "POST",
-        uploadType: FileSystem.FileSystemUploadType.MULTIPART,
-        fieldName: "files",
+        uri,
+        fileFieldName: "files",
         mimeType: "image/jpeg",
         headers: zeroGPUHeaders(),
+        timeoutMs: 45000,
       },
-      45000,
       "Couldn't complete the upload in time. Please try again.",
     );
     console.log("[thrivelens] analyze: upload response", result.status);

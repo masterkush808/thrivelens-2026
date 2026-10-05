@@ -1,13 +1,19 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { PremiumScreen } from "@/components/brand/PremiumScreen";
 import { ActivityIndicator, Platform, Pressable, ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useLocalSearchParams, router } from "expo-router";
-import MapView, { Marker } from "react-native-maps";
-import type { Region } from "react-native-maps";
 import { Locate, Navigation } from "lucide-react-native";
 
+// Both maps are imported through platform-split wrappers. react-native-maps
+// cannot be evaluated in a browser (codegenNativeComponent is missing), so
+// importing it directly crashed this route on web.
+import { NativeMap } from "@/components/maps/NativeMap";
+import type { NativeMapMarker } from "@/components/maps/NativeMap";
+import { WebMap } from "@/components/maps/WebMap";
+import type { WebMapMarker } from "@/components/maps/WebMap";
 import { Text, Card, Button } from "@/components/ui";
+
 import {
   getCurrentLocation,
   openDirections,
@@ -16,6 +22,16 @@ import {
   searchNearbyStores,
   StoreCategory,
 } from "@/services/places";
+
+/** react-native-maps' Region, redeclared so this file never imports that
+ * package on web (its entry point calls codegenNativeComponent at import
+ * time, which react-native-web does not implement). */
+interface Region {
+  latitude: number;
+  longitude: number;
+  latitudeDelta: number;
+  longitudeDelta: number;
+}
 
 const CATEGORIES: { key: StoreCategory; label: string }[] = [
   { key: "gym", label: "Gyms" },
@@ -120,6 +136,41 @@ export default function MapsScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category]);
 
+  // Both map implementations take the same marker shape; `kind` only tells
+  // Leaflet which divIcon to draw, so the native list is derived from the same
+  // coordinates rather than duplicating the mapping logic.
+  const mapMarkers = useMemo(() => {
+    const markers: WebMapMarker[] = [];
+    if (position) {
+      markers.push({
+        id: "user",
+        lat: position.lat,
+        lng: position.lng,
+        title: "You are here",
+        kind: "user",
+      });
+    }
+    for (const place of places) {
+      markers.push({
+        id: place.id,
+        lat: place.lat,
+        lng: place.lng,
+        title: place.name,
+        description:
+          place.distanceMeters !== null && place.distanceMeters !== undefined
+            ? `${formatDistance(place.distanceMeters)} away`
+            : (place.address ?? undefined),
+        kind: "place",
+      });
+    }
+    return markers;
+  }, [position, places]);
+
+  const nativeMarkers = useMemo<NativeMapMarker[]>(
+    () => mapMarkers.map(({ kind: _kind, ...marker }) => marker),
+    [mapMarkers],
+  );
+
   const changeCategory = (next: StoreCategory) => {
     if (next !== category) {
       setPlaces([]);
@@ -182,36 +233,19 @@ export default function MapsScreen() {
                   </View>
                 ) : Platform.OS === "web" ? (
                   // react-native-maps resolves to react-native-web's
-                  // UnimplementedView on web, so <MapView> rendered as an empty
-                  // box in the deployed PWA. Show an honest explanation and a
-                  // working handoff instead of a dead view. The nearby list
-                  // below and its Directions buttons work on web.
-                  <View className="p-6 gap-3">
-                    <Text variant="body" className="text-text-primary font-semibold">
-                      Interactive map is not available in the browser
-                    </Text>
-                    <Text variant="bodySmall" className="text-text-secondary leading-5">
-                      The interactive map needs the mobile app. On the web you can still browse
-                      the {places.length} nearby {places.length === 1 ? "place" : "places"} below and
-                      open turn-by-turn directions in Google Maps.
-                    </Text>
-                    {position ? (
-                      <Button
-                        variant="secondary"
-                        size="sm"
-                        title="Open Google Maps here"
-                        onPress={() => {
-                          void openDirections(position.lat, position.lng, "your location").catch(
-                            (err: unknown) => setError((err as PlacesError).message),
-                          );
-                        }}
-                      />
-                    ) : null}
-                  </View>
+                  // UnimplementedView on web, so <MapView> painted an empty box
+                  // in the deployed PWA. WebMap.web.tsx renders real
+                  // OpenStreetMap tiles via Leaflet instead, using the same
+                  // coordinates and markers as the native branch.
+                  <WebMap
+                    center={position ?? { lat: region?.latitude ?? 0, lng: region?.longitude ?? 0 }}
+                    zoom={14}
+                    markers={mapMarkers}
+                    height={288}
+                  />
                 ) : (
-                  <MapView
-                    style={{ flex: 1 }}
-                    initialRegion={
+                  <NativeMap
+                    region={
                       region ?? {
                         latitude: position?.lat ?? 0,
                         longitude: position?.lng ?? 0,
@@ -219,27 +253,9 @@ export default function MapsScreen() {
                         longitudeDelta: 0.05,
                       }
                     }
-                    region={region ?? undefined}
                     showsUserLocation
-                    showsMyLocationButton={false}
-                  >
-                    {position ? (
-                      <Marker coordinate={{ latitude: position.lat, longitude: position.lng }} title="You are here" pinColor="#208AEF" />
-                    ) : null}
-                    {places.map((place) => (
-                      <Marker
-                        key={place.id}
-                        coordinate={{ latitude: place.lat, longitude: place.lng }}
-                        title={place.name}
-                        description={
-                          place.distanceMeters !== null && place.distanceMeters !== undefined
-                            ? `${formatDistance(place.distanceMeters)} away`
-                            : place.address ?? undefined
-                        }
-                        pinColor="#FF6B35"
-                      />
-                    ))}
-                  </MapView>
+                    markers={nativeMarkers}
+                  />
                 )}
               </View>
             </Card>
