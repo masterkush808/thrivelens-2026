@@ -128,10 +128,21 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 async function main() {
   const distDir = process.argv[3] ?? "dist";
-  const port = 8123;
-  const server = await serveStatic(distDir, port);
-  const base = `http://127.0.0.1:${port}`;
-  console.log(`serving ${distDir} at ${base}`);
+  const liveBase = (process.argv[2] ?? "").startsWith("https://")
+    ? process.argv[2]
+    : null;
+
+  let server = null;
+  let base;
+  if (liveBase) {
+    base = liveBase;
+    console.log(`testing the LIVE deployment at ${base}`);
+  } else {
+    const port = 8123;
+    server = await serveStatic(distDir, port);
+    base = `http://127.0.0.1:${port}`;
+    console.log(`serving ${distDir} at ${base}`);
+  }
 
   // Record every upload attempt so we can assert on the transport.
   const uploads = [];
@@ -393,7 +404,15 @@ async function main() {
     }
 
     // ---- 2. Multipart upload transport ------------------------------------
-    console.log("\n2) Multipart upload transport");
+    if (liveBase) {
+      // An https page cannot POST to a http://127.0.0.1 sink: mixed content is
+      // blocked before CORS is even considered. The live origin is covered by
+      // `npm run verify:space-upload`, which posts to the real Space instead.
+      console.log(
+        "\n2) Multipart upload transport\n  [SKIP] local sink is unreachable from an https origin; run verify:space-upload",
+      );
+    } else {
+      console.log("\n2) Multipart upload transport");
 
     // The bundle does not export multipartUpload, so exercise the same steps
     // it performs: resolve the picker blob: URI, then POST a FormData body.
@@ -454,7 +473,8 @@ async function main() {
       "file part named correctly",
       /name="files"/.test(upload.head ?? "") &&
         /filename="upload\.jpg"/.test(upload.head ?? ""),
-    );
+      );
+    }
 
     // ---- 3. No regressions -----------------------------------------------
     console.log("\n3) Regression check");
@@ -484,7 +504,7 @@ async function main() {
   } finally {
     cdp?.ws.close();
     chrome.kill();
-    server.close();
+    server?.close();
     uploadListener.close();
   }
 

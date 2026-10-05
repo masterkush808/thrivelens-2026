@@ -33,16 +33,27 @@ async function readEnv() {
   return { url, token };
 }
 
-const server = (await import("node:http")).createServer(async (req, res) => {
-  try {
-    const body = await readFile("dist/index.html");
-    res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
-    res.end(body);
-  } catch {
-    res.writeHead(500).end("no dist/index.html - run npm run build:web first");
-  }
-});
-await new Promise((r) => server.listen(PORT, "127.0.0.1", r));
+const liveOrigin = (process.argv[2] ?? "").startsWith("https://")
+  ? process.argv[2]
+  : null;
+
+let server = null;
+let pageOrigin = `http://127.0.0.1:${PORT}`;
+if (liveOrigin) {
+  pageOrigin = liveOrigin;
+  console.log(`testing the LIVE deployment origin ${pageOrigin}`);
+} else {
+  server = (await import("node:http")).createServer(async (req, res) => {
+    try {
+      const body = await readFile("dist/index.html");
+      res.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+      res.end(body);
+    } catch {
+      res.writeHead(500).end("no dist/index.html - run npm run build:web first");
+    }
+  });
+  await new Promise((r) => server.listen(PORT, "127.0.0.1", r));
+}
 
 const { url: spaceUrl, token } = await readEnv();
 
@@ -93,7 +104,7 @@ const send = (method, params = {}) =>
 
 await send("Page.enable");
 await send("Runtime.enable");
-await send("Page.navigate", { url: `http://127.0.0.1:${PORT}/` });
+await send("Page.navigate", { url: `${pageOrigin}/` });
 await sleep(3000);
 
 console.log(`uploading a 1x1 PNG from a browser to ${spaceUrl} (no inference run)`);
@@ -122,7 +133,7 @@ const out = await send("Runtime.evaluate", {
 const r = out.result?.result?.value;
 ws.close();
 chrome.kill();
-server.close();
+server?.close();
 
 if (!r) {
   console.error("no result:", JSON.stringify(out).slice(0, 400));
