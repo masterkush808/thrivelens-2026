@@ -63,6 +63,7 @@
           "locationWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location to find real stores and gyms near you."
         }
       ],
+      "react-native-maps",
       "expo-secure-store",
       "expo-sqlite"
     ],

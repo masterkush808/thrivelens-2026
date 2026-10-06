@@ -101,6 +101,10 @@ function* walk(dir) {
 // policy.
 // ---------------------------------------------------------------------------
 const ALLOWED_PUBLIC_HF_TOKEN = process.env.ALLOWED_PUBLIC_HF_TOKEN ?? "";
+const ALLOWED_PUBLIC_GOOGLE_MAPS_KEYS = [
+  process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY,
+  process.env.EXPO_PUBLIC_GOOGLE_PLACES_API_KEY,
+].filter((key) => key && /^AIza[0-9A-Za-z_-]{35}$/.test(key));
 
 async function assertAllowedTokenIsReadOnly(token) {
   if (!token) return;
@@ -160,6 +164,14 @@ for (const file of files) {
     if (match) {
       // An explicitly allowed, read-scoped token is the one accepted exception.
       if (ALLOWED_PUBLIC_HF_TOKEN && match[0].includes(ALLOWED_PUBLIC_HF_TOKEN)) {
+        continue;
+      }
+      // Browser-restricted Google Maps keys are public identifiers required by
+      // the web SDK. Only the explicitly configured maps/places keys qualify.
+      if (
+        rule.name === "Google API key" &&
+        ALLOWED_PUBLIC_GOOGLE_MAPS_KEYS.includes(match[0])
+      ) {
         continue;
       }
       // Never echo the credential itself.

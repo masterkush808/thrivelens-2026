@@ -11,7 +11,8 @@
  *
  * WebMap.web.tsx (Leaflet) is the web counterpart.
  */
-import MapView, { Marker } from "react-native-maps";
+import Constants from "expo-constants";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import type { Region } from "react-native-maps";
 
 export interface NativeMapMarker {
@@ -29,9 +30,12 @@ export interface NativeMapProps {
 }
 
 export function NativeMap({ region, showsUserLocation, markers }: NativeMapProps) {
+  const googleMapsIOSConfigured =
+    Constants.expoConfig?.extra?.googleMapsIosEnabled === true;
   return (
     <MapView
       style={{ flex: 1 }}
+      provider={googleMapsIOSConfigured ? PROVIDER_GOOGLE : undefined}
       initialRegion={region}
       region={region}
       showsUserLocation={showsUserLocation}

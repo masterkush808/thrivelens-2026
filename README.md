@@ -6,7 +6,7 @@ ThriveLens 2026 is the finalized main build of a mobile wellness app built as a 
 
 ## Highlights
 - **AI health coach** — conversational assistant that can *do things*: schedule workouts, log meals, find nearby healthy-food stores, and answer nutrition questions.
-- **Real maps** — OpenStreetMap (Overpass) querying with device auto-location, closest-first results, and auto-centering.
+- **Real maps** — Google Maps on web and configured native builds, with device auto-location, nearby-place search, closest-first results, and an OpenStreetMap fallback.
 - **Food identification** — camera scanner using a fine-tuned image model (QLoRA FineWeb/Food-R1 based), served server-side with vision-language fallback.
 - **Fitness & nutrition tracking** — workouts, meals, cheat days, gym schedules, fridge inventory, barcode lookup (Open Food Facts), adherence and progress reporting.
 - **Reduced-motion & accessibility support** — theme-aware gold-and-obsidian design system with motion preferences.

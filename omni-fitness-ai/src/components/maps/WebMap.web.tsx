@@ -1,17 +1,16 @@
 /**
- * Leaflet-backed map for the web build.
+ * Web map with Google Maps as the configured provider and Leaflet as a fallback.
  *
  * react-native-maps resolves MapView.web.ts to
  * `react-native-web/dist/modules/UnimplementedView`, so the deployed PWA had no
- * map at all. Leaflet renders real OpenStreetMap tiles in the browser, so the
- * Nearby Stores screen works on web without an API key.
+ * map at all. Use the Maps JavaScript API when a browser-restricted key is
+ * configured; keep Leaflet/OpenStreetMap available when it is not.
  *
- * Imported only from maps.tsx inside the `Platform.OS === "web"` branch, and
- * Leaflet touches `window` at import time, so it must never be reached on
- * native.
+ * Imported only from maps.tsx inside the `Platform.OS === "web"` branch.
  */
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { View } from "react-native";
+import { GoogleMap } from "@/components/maps/GoogleMap";
 
 export interface WebMapMarker {
   id: string;
@@ -29,7 +28,25 @@ export interface WebMapProps {
   height?: number;
 }
 
-export function WebMap({ center, zoom = 14, markers, height = 288 }: WebMapProps) {
+const GOOGLE_MAPS_API_KEY = process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY;
+
+export function WebMap(props: WebMapProps) {
+  const [googleMapsFailed, setGoogleMapsFailed] = useState(false);
+
+  if (GOOGLE_MAPS_API_KEY && !googleMapsFailed) {
+    return (
+      <GoogleMap
+        {...props}
+        apiKey={GOOGLE_MAPS_API_KEY}
+        onError={() => setGoogleMapsFailed(true)}
+      />
+    );
+  }
+
+  return <OpenStreetMapMap {...props} />;
+}
+
+function OpenStreetMapMap({ center, zoom = 14, markers, height = 288 }: WebMapProps) {
   const hostRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<import("leaflet").Map | null>(null);
 
